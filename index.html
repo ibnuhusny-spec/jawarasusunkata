@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jawara Susun Kata</title>
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Changa+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
@@ -42,7 +43,7 @@
             border: 4px solid white; border-radius: 50px; cursor: pointer; outline: none; margin: 10px;
             box-shadow: 0 6px 0 rgba(0,0,0,0.2), 0 10px 20px rgba(0,0,0,0.2), inset 0 3px 0 rgba(255,255,255,0.5), inset 0 -3px 0 rgba(0,0,0,0.1);
             transition: all 0.1s; min-width: 200px; text-align: center;
-            -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent; user-select: none;
         }
         .btn-metallic:active { transform: translateY(6px); box-shadow: 0 0 0 rgba(0,0,0,0.2), inset 0 3px 0 rgba(0,0,0,0.1); }
         .btn-green { background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%); }
@@ -61,6 +62,7 @@
         .logo-img { width: 140px; margin-bottom: 20px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); display: block; margin: 0 auto 20px; }
         .school-info { font-family: sans-serif; color: white; margin-top: 20px; font-weight: bold; font-size: 1.2rem; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; text-align: center; }
         .dev-team { font-size: 0.9rem; color: white; margin-top: 5px; text-shadow: 1px 1px 2px black; text-align: center; }
+
         @media (max-width: 600px) { .game-title-splash { font-size: 2.8rem; -webkit-text-stroke: 2px white; } .logo-img { width: 100px; } }
 
         /* GAMEPLAY */
@@ -79,23 +81,30 @@
         .game-card { background: white; padding: 5px; border-radius: 15px; border: 2px solid white; box-shadow: 0 5px 10px rgba(0,0,0,0.1); margin-bottom: 5px; width: 95%; max-width: 300px; text-align: center; }
         .image-preview img { width: 100%; height: 90px; object-fit: contain; }
         
+        /* HINT STYLE */
         .word-hint {
             font-family: 'Amiri', serif; font-size: 2.5rem; color: #888; background: #fffbf0;
             border: 2px dashed #ffeeba; border-radius: 10px; margin-top: 2px; padding: 0 10px;
             display: none; line-height: 1.2; pointer-events: none;
         }
         
-        .word-meaning { font-family: 'Fredoka', sans-serif; font-size: 1rem; color: var(--secondary); margin-top: 2px; font-weight: bold; }
+        /* ARTI KATA */
+        .word-meaning {
+            font-family: 'Fredoka', sans-serif; font-size: 1rem; color: var(--secondary);
+            margin-top: 2px; font-weight: bold;
+        }
         
         .slots-container { display: flex; gap: 5px; margin: 5px 0; direction: rtl; min-height: 60px; align-items: center; justify-content: center; flex-wrap: wrap; }
         .slot { width: 45px; height: 60px; background: #ecf0f1; border: 2px dashed #bdc3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 30px; transition: all 0.3s; cursor: pointer; margin: 2px; }
         .slot.correct { background: #d4edda; border-color: #28a745; }
         .slot.wrong { background: #f8d7da; border-color: #dc3545; animation: shake 0.4s; }
 
+        /* Layout Adjustment for Pool & Button */
         .letters-pool { 
             display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; width: 98%; direction: rtl; 
             padding: 5px; background: rgba(255,255,255,0.3); border-radius: 15px; 
-            min-height: 80px; margin-bottom: 5px;
+            min-height: 80px; /* Reduced height */
+            margin-bottom: 5px;
         }
         .letter-card { width: 45px; height: 45px; background: white; border: 2px solid #bdc3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 26px; cursor: grab; box-shadow: 0 4px 0 #bdc3c7; user-select: none; touch-action: none; }
         .letter-card.touch-dragging { position: fixed; z-index: 9999; opacity: 0.9; transform: scale(1.2); pointer-events: none; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
@@ -122,6 +131,11 @@
 
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 100; }
         .modal-box { background: #fdfdfd; padding: 30px; border-radius: 20px; width: 85%; max-width: 450px; text-align: center; border: 5px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: fadeIn 0.3s; }
+        
+        /* LEADERBOARD STYLE */
+        .lb-list { list-style: none; padding: 0; text-align: left; max-height: 300px; overflow-y: auto; }
+        .lb-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; font-size: 1.1rem; }
+        .lb-item:first-child { color: var(--accent); font-weight: bold; font-size: 1.3rem; }
 
         #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 17px; opacity: 0; transition: opacity 0.3s; }
         #toast.show { visibility: visible; opacity: 1; }
@@ -200,9 +214,7 @@
                 <div class="slots-container" id="p1-slots"></div>
                 <div class="letters-pool" id="p1-pool"></div>
                 
-                <!-- Menggunakan onpointerdown untuk deteksi instan dan independen -->
                 <button id="p1-check" class="btn-metallic btn-green" onpointerdown="handleCheck(event, 1)" style="display:none; transform:scale(0.8); margin: 2px;">Cek Jawaban</button>
-                
                 <div id="p1-msg" style="margin-top:5px; font-weight:bold; height:20px;"></div>
             </div>
 
@@ -226,9 +238,7 @@
                 <div class="slots-container" id="p2-slots"></div>
                 <div class="letters-pool" id="p2-pool"></div>
                 
-                <!-- Menggunakan onpointerdown untuk deteksi instan dan independen -->
                 <button id="p2-check" class="btn-metallic btn-green" onpointerdown="handleCheck(event, 2)" style="display:none; transform:scale(0.8); margin: 2px;">Cek Jawaban</button>
-                
                 <div id="p2-msg" style="margin-top:5px; font-weight:bold; height:20px;"></div>
             </div>
         </div>
@@ -257,7 +267,11 @@
     <div id="leaderboard-modal" class="modal-overlay">
         <div class="modal-box">
             <h2>🏆 Top Skor</h2>
-            <ul style="list-style:none; padding:0; text-align:left;"><li>1. Ahmad - 1200</li><li>2. Fatimah - 1150</li></ul>
+            <div id="lb-container" style="min-height:100px; display:flex; align-items:center; justify-content:center;">
+                <!-- List Kosong -->
+                <ul id="lb-list" class="lb-list" style="width:100%;"></ul>
+                <div id="lb-empty-msg" style="color:#888;">Belum ada skor hari ini.<br>Ayo main!</div>
+            </div>
             <button class="btn-metallic btn-red" onclick="closeLeaderboard()">Tutup</button>
         </div>
     </div>
@@ -313,7 +327,8 @@
 
         // --- GLOBAL VARIABLES ---
         let appState = { mode: 1, difficulty: "normal", currentThemeIdx: 0, currentWordIdx: 0, timer: 0, interval: null, questionQueue: [], players: [ { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null }, { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null } ] };
-        let activeDrags = {}; // Defined ONCE here
+        let activeDrags = {}; 
+        let localHighScores = []; // SESSION-ONLY LEADERBOARD
         const placeholderImg = "https://cdn-icons-png.flaticon.com/512/3330/3330314.png"; 
 
         const arabicLetters = /[\u0621-\u064A]/;
@@ -544,6 +559,7 @@
             clone.classList.remove('touch-dragging'); 
             clone.style.position=''; 
             clone.onclick = (e) => { e.stopPropagation(); restoreLetter(clone, slot, pNum); };
+            
             slot.appendChild(clone); 
             el.classList.add('hidden'); 
             updateForms(pNum); 
@@ -566,7 +582,6 @@
                 document.getElementById(`p${pNum}-check`).style.display='inline-block'; 
         }
 
-        // NEW HANDLER FOR CHECK BUTTON
         function handleCheck(e, pNum) {
             e.preventDefault(); // Mencegah double event
             checkAnswer(pNum);
@@ -592,7 +607,7 @@
                 document.getElementById(`p${pNum}-msg`).style.color = "var(--primary)";
                 document.getElementById(`p${pNum}-check`).style.display = 'none';
                 
-                document.getElementById(`p${pNum}-hint`).style.display = 'block'; // Show result
+                document.getElementById(`p${pNum}-hint`).style.display = 'block'; 
                 confetti(); document.getElementById('sfx-win').play();
                 
                 setTimeout(() => {
@@ -630,10 +645,14 @@
             const content = document.getElementById('resultContent');
             let html = `<div><h1 style="color:var(--primary); font-family:'Amiri'; margin:0;">Waktu Habis!</h1></div><hr>`;
             
+            // Add score to local leaderboard
             if(appState.mode === 1) {
-                const p1 = appState.players[0];
-                html += `<div>Skor Akhir: <b style="font-size:2rem">${p1.score}</b></div><div style="font-size:0.9rem">Salah: ${p1.mistakes}</div>`;
+                addToLeaderboard(appState.players[0].name, appState.players[0].score);
+                html += `<div>Skor Akhir: <b style="font-size:2rem">${appState.players[0].score}</b></div><div style="font-size:0.9rem">Salah: ${appState.players[0].mistakes}</div>`;
             } else {
+                addToLeaderboard(appState.players[0].name, appState.players[0].score);
+                addToLeaderboard(appState.players[1].name, appState.players[1].score);
+                
                 const p1 = appState.players[0]; const p2 = appState.players[1];
                 let winner = "Seri!"; let wColor = "#555";
                 if(p1.score > p2.score) { winner = p1.name + " Menang!"; wColor= "var(--primary)"; }
@@ -648,6 +667,35 @@
             sendToGoogleSheet();
         }
 
+        // --- LEADERBOARD LOGIC ---
+        function addToLeaderboard(name, score) {
+            if(score > 0) {
+                localHighScores.push({name, score});
+                localHighScores.sort((a, b) => b.score - a.score);
+                localHighScores = localHighScores.slice(0, 5); // Keep top 5
+            }
+        }
+
+        function openLeaderboard(){
+            const list = document.getElementById('lb-list');
+            const msg = document.getElementById('lb-empty-msg');
+            list.innerHTML = "";
+            
+            if(localHighScores.length === 0) {
+                msg.style.display = "block";
+            } else {
+                msg.style.display = "none";
+                localHighScores.forEach((item, idx) => {
+                    const li = document.createElement('li');
+                    li.className = 'lb-item';
+                    li.innerHTML = `<span>${idx+1}. ${item.name}</span><span>${item.score}</span>`;
+                    list.appendChild(li);
+                });
+            }
+            document.getElementById('leaderboard-modal').style.display='flex';
+        }
+
+        // --- GOOGLE SHEET SEND ---
         function sendToGoogleSheet() {
             if(!GOOGLE_SCRIPT_URL) return;
             const playersToSend = [];
@@ -672,11 +720,10 @@
         function showToast(t,c) { const x=document.getElementById('toast'); x.innerText=t; x.style.background=c; x.className="show"; setTimeout(()=>{x.className=x.className.replace("show","")},3000); }
         function openSettings(){document.getElementById('settings-modal').style.display='flex'}
         function closeSettings(){ const rs=document.getElementsByName('diff'); for(let r of rs) if(r.checked) appState.difficulty=r.value; document.getElementById('settings-modal').style.display='none'; }
-        function openLeaderboard(){document.getElementById('leaderboard-modal').style.display='flex'}
         function closeLeaderboard(){document.getElementById('leaderboard-modal').style.display='none'}
         function playTTS(pNum) { 
-            const pIdx = pNum - 1;
-            if(appState.players[pIdx].currentWord) {
+            const pIdx = pNum; 
+            if(appState.players[pIdx] && appState.players[pIdx].currentWord) {
                 const u=new SpeechSynthesisUtterance(appState.players[pIdx].currentWord.word); 
                 u.lang='ar-SA'; u.rate=0.8; window.speechSynthesis.speak(u); 
             }
