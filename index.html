@@ -5,7 +5,6 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jawara Susun Kata</title>
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Changa+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
@@ -43,7 +42,7 @@
             border: 4px solid white; border-radius: 50px; cursor: pointer; outline: none; margin: 10px;
             box-shadow: 0 6px 0 rgba(0,0,0,0.2), 0 10px 20px rgba(0,0,0,0.2), inset 0 3px 0 rgba(255,255,255,0.5), inset 0 -3px 0 rgba(0,0,0,0.1);
             transition: all 0.1s; min-width: 200px; text-align: center;
-            -webkit-tap-highlight-color: transparent; user-select: none;
+            -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
         }
         .btn-metallic:active { transform: translateY(6px); box-shadow: 0 0 0 rgba(0,0,0,0.2), inset 0 3px 0 rgba(0,0,0,0.1); }
         .btn-green { background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%); }
@@ -59,12 +58,9 @@
             font-family: 'Changa One', cursive; font-size: 4rem; margin: 10px 0; line-height: 1.1;
             color: var(--accent); -webkit-text-stroke: 4px white; paint-order: stroke fill; text-align: center;
         }
-        /* PERBAIKAN LOGO: Path disederhanakan jadi 'logo.png' */
         .logo-img { width: 140px; margin-bottom: 20px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); display: block; margin: 0 auto 20px; }
-        
         .school-info { font-family: sans-serif; color: white; margin-top: 20px; font-weight: bold; font-size: 1.2rem; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; text-align: center; }
         .dev-team { font-size: 0.9rem; color: white; margin-top: 5px; text-shadow: 1px 1px 2px black; text-align: center; }
-
         @media (max-width: 600px) { .game-title-splash { font-size: 2.8rem; -webkit-text-stroke: 2px white; } .logo-img { width: 100px; } }
 
         /* GAMEPLAY */
@@ -83,39 +79,32 @@
         .game-card { background: white; padding: 5px; border-radius: 15px; border: 2px solid white; box-shadow: 0 5px 10px rgba(0,0,0,0.1); margin-bottom: 5px; width: 95%; max-width: 300px; text-align: center; }
         .image-preview img { width: 100%; height: 90px; object-fit: contain; }
         
-        /* HINT STYLE */
         .word-hint {
             font-family: 'Amiri', serif; font-size: 2.5rem; color: #888; background: #fffbf0;
             border: 2px dashed #ffeeba; border-radius: 10px; margin-top: 2px; padding: 0 10px;
             display: none; line-height: 1.2; pointer-events: none;
         }
         
-        /* ARTI KATA */
-        .word-meaning {
-            font-family: 'Fredoka', sans-serif; font-size: 1rem; color: var(--secondary);
-            margin-top: 2px; font-weight: bold;
-        }
+        .word-meaning { font-family: 'Fredoka', sans-serif; font-size: 1rem; color: var(--secondary); margin-top: 2px; font-weight: bold; }
         
         .slots-container { display: flex; gap: 5px; margin: 5px 0; direction: rtl; min-height: 60px; align-items: center; justify-content: center; flex-wrap: wrap; }
         .slot { width: 45px; height: 60px; background: #ecf0f1; border: 2px dashed #bdc3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 30px; transition: all 0.3s; cursor: pointer; margin: 2px; }
         .slot.correct { background: #d4edda; border-color: #28a745; }
         .slot.wrong { background: #f8d7da; border-color: #dc3545; animation: shake 0.4s; }
 
-        /* Layout Adjustment for Pool & Button */
         .letters-pool { 
             display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; width: 98%; direction: rtl; 
             padding: 5px; background: rgba(255,255,255,0.3); border-radius: 15px; 
-            min-height: 80px; /* Reduced height */
-            margin-bottom: 5px;
+            min-height: 80px; margin-bottom: 5px;
         }
-        .letter-card { width: 45px; height: 45px; background: white; border: 2px solid #bdc3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 26px; cursor: pointer; box-shadow: 0 4px 0 #bdc3c7; user-select: none; touch-action: none; }
-        .letter-card.touch-dragging { position: fixed; z-index: 9999; opacity: 0.9; transform: scale(1.2); pointer-events: none; }
+        .letter-card { width: 45px; height: 45px; background: white; border: 2px solid #bdc3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 26px; cursor: grab; box-shadow: 0 4px 0 #bdc3c7; user-select: none; touch-action: none; }
+        .letter-card.touch-dragging { position: fixed; z-index: 9999; opacity: 0.9; transform: scale(1.2); pointer-events: none; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
         .letter-card.hidden { opacity: 0; pointer-events: none; }
-        .slot .letter-card { border: none; background: transparent; box-shadow: none; font-size: 38px; margin-top: -5px; width: 100%; height: 100%; }
+        .slot .letter-card { border: none; background: transparent; box-shadow: none; font-size: 38px; margin-top: -5px; width: 100%; height: 100%; cursor: pointer; pointer-events: auto; }
 
         .top-bar { position: absolute; top: 0; left: 0; width: 100%; height: 80px; background: white; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; box-sizing: border-box; z-index: 50; border-bottom: 4px solid var(--primary); }
         .timer-badge { background: var(--wrong); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 1.5rem; min-width: 60px; text-align: center; }
-        .round-indicator { font-size: 1.2rem; font-weight: bold; color: var(--secondary); margin-left: 10px; background: #eee; padding: 5px 10px; border-radius: 10px; }
+        .round-indicator { font-size: 0.9rem; font-weight: bold; color: #666; margin-top: 2px; }
         
         .p-info { text-align: center; width: 100%; margin-bottom: 2px; }
         .p-name { font-weight: bold; color: var(--primary); font-size: 1.1rem; }
@@ -145,7 +134,6 @@
 
     <!-- 1. SPLASH -->
     <div id="splash-screen" class="screen active">
-        <!-- GANTI SRC DI SINI: Pastikan file 'logo.png' ada di samping index.html -->
         <img src="logo.png" alt="Logo Sekolah" class="logo-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2602/2602414.png'">
         <div class="game-title-splash">JAWARA<br>SUSUN KATA</div>
         <div class="school-info">SDIT Qurratu A'yun Al-Islami Maros</div>
@@ -171,7 +159,7 @@
         </div>
     </div>
 
-    <!-- 4. LEVEL SELECT (THEME SELECTOR) -->
+    <!-- 4. LEVEL SELECT -->
     <div id="level-screen" class="screen">
         <h2 class="menu-title" style="margin-bottom:10px;">Pilih Tema</h2>
         <div class="level-scroll-container">
@@ -197,28 +185,23 @@
                 <div class="panel-overlay" id="p1-overlay"><div>✅ SELESAI</div><div style="font-size:1rem; margin-top:10px;">Menunggu Lawan...</div></div>
                 <div class="p-info">
                     <div class="p-name" id="p1-name-disp">P1</div>
-                    <div style="display:flex; justify-content:center; gap:10px;">
+                    <div style="display:flex; justify-content:center; gap:10px; align-items:center;">
                         <span class="p-lives" id="p1-lives">❤️❤️❤️</span>
                         <span class="p-score" id="p1-score-disp">0</span>
                     </div>
+                    <div class="round-indicator" id="p1-round-disp">Soal 1/10</div>
                 </div>
                 <div class="game-card">
                     <div class="image-preview"><img id="p1-img" src=""></div>
-                    
-                    <!-- NEW: ARTI INDONESIA -->
                     <div class="word-meaning" id="p1-meaning"></div>
-                    
-                    <!-- HINT ELEMENT -->
                     <div id="p1-hint" class="word-hint"></div>
-                    
-                    <!-- PERBAIKAN POSISI TOMBOL AUDIO -->
-                    <button class="btn-metallic btn-blue" style="font-size:0.8rem; padding:5px 15px; min-width:120px; width:auto; margin: 5px auto; display: block;" onclick="playTTS()">🔊 Dengar Kata</button>
+                    <button class="btn-metallic btn-blue" style="font-size:0.8rem; padding:5px 15px; min-width:120px; width:auto; margin: 5px auto; display: block;" onclick="playTTS(0)">🔊 Dengar Kata</button>
                 </div>
                 <div class="slots-container" id="p1-slots"></div>
                 <div class="letters-pool" id="p1-pool"></div>
                 
-                <!-- Tombol Cek (Margin adjusted) -->
-                <button id="p1-check" class="btn-metallic btn-green" onclick="checkAnswer(1)" oncontextmenu="return false;" style="display:none; transform:scale(0.8); margin: 2px;">Cek Jawaban</button>
+                <!-- Menggunakan onpointerdown untuk deteksi instan dan independen -->
+                <button id="p1-check" class="btn-metallic btn-green" onpointerdown="handleCheck(event, 1)" style="display:none; transform:scale(0.8); margin: 2px;">Cek Jawaban</button>
                 
                 <div id="p1-msg" style="margin-top:5px; font-weight:bold; height:20px;"></div>
             </div>
@@ -228,28 +211,23 @@
                 <div class="panel-overlay" id="p2-overlay"><div>✅ SELESAI</div><div style="font-size:1rem; margin-top:10px;">Menunggu Lawan...</div></div>
                 <div class="p-info">
                     <div class="p-name" id="p2-name-disp">P2</div>
-                    <div style="display:flex; justify-content:center; gap:10px;">
+                    <div style="display:flex; justify-content:center; gap:10px; align-items:center;">
                         <span class="p-lives" id="p2-lives">❤️❤️❤️</span>
                         <span class="p-score" id="p2-score-disp">0</span>
                     </div>
+                    <div class="round-indicator" id="p2-round-disp">Soal 1/10</div>
                 </div>
                 <div class="game-card">
                     <div class="image-preview"><img id="p2-img" src=""></div>
-                    
-                    <!-- NEW: ARTI INDONESIA -->
                     <div class="word-meaning" id="p2-meaning"></div>
-                    
-                    <!-- HINT ELEMENT -->
                     <div id="p2-hint" class="word-hint"></div>
-                    
-                    <!-- PERBAIKAN POSISI TOMBOL AUDIO -->
-                    <button class="btn-metallic btn-blue" style="font-size:0.8rem; padding:5px 15px; min-width:120px; width:auto; margin: 5px auto; display: block;" onclick="playTTS()">🔊 Dengar Kata</button>
+                    <button class="btn-metallic btn-blue" style="font-size:0.8rem; padding:5px 15px; min-width:120px; width:auto; margin: 5px auto; display: block;" onclick="playTTS(1)">🔊 Dengar Kata</button>
                 </div>
                 <div class="slots-container" id="p2-slots"></div>
                 <div class="letters-pool" id="p2-pool"></div>
                 
-                <!-- Tombol Cek (Margin adjusted) -->
-                <button id="p2-check" class="btn-metallic btn-green" onclick="checkAnswer(2)" oncontextmenu="return false;" style="display:none; transform:scale(0.8); margin: 2px;">Cek Jawaban</button>
+                <!-- Menggunakan onpointerdown untuk deteksi instan dan independen -->
+                <button id="p2-check" class="btn-metallic btn-green" onpointerdown="handleCheck(event, 2)" style="display:none; transform:scale(0.8); margin: 2px;">Cek Jawaban</button>
                 
                 <div id="p2-msg" style="margin-top:5px; font-weight:bold; height:20px;"></div>
             </div>
@@ -326,17 +304,16 @@
                     const indo = item[1];
                     let img;
                     if (item.length > 2) img = item[2];
-                    else if (theme.theme.toLowerCase().includes("sifat")) img = "https://cdn-icons-png.flaticon.com/512/210/210545.png"; // Heart
+                    else if (theme.theme.toLowerCase().includes("sifat")) img = "https://cdn-icons-png.flaticon.com/512/210/210545.png"; 
                     else img = `img/${indo.toLowerCase().replace(/\s+/g, '').replace(/[\(\)]/g, '')}.png`;
-                    
                     return [arab, indo, img];
                 })
             };
         });
 
         // --- GLOBAL VARIABLES ---
-        let appState = { mode: 1, difficulty: "normal", currentThemeIdx: 0, currentWordIdx: 0, timer: 0, interval: null, questionQueue: [], players: [ { name: "", score: 0, lives: 3, mistakes: 0, finished: false }, { name: "", score: 0, lives: 3, mistakes: 0, finished: false } ] };
-        let activeDrags = {};
+        let appState = { mode: 1, difficulty: "normal", currentThemeIdx: 0, currentWordIdx: 0, timer: 0, interval: null, questionQueue: [], players: [ { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null }, { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null } ] };
+        let activeDrags = {}; // Defined ONCE here
         const placeholderImg = "https://cdn-icons-png.flaticon.com/512/3330/3330314.png"; 
 
         const arabicLetters = /[\u0621-\u064A]/;
@@ -358,10 +335,6 @@
         window.onload = function() {
             setTimeout(() => { showScreen('mode-screen'); }, 3000);
             renderThemeButtons();
-            
-            // Add listeners to check buttons for concurrent touch
-            document.getElementById('p1-check').addEventListener('touchstart', function(e) { e.preventDefault(); checkAnswer(1); });
-            document.getElementById('p2-check').addEventListener('touchstart', function(e) { e.preventDefault(); checkAnswer(2); });
         };
 
         function renderThemeButtons() {
@@ -398,19 +371,39 @@
             appState.currentThemeIdx = themeIdx;
             appState.questionQueue = vocabData[themeIdx].items; 
             appState.currentWordIdx = 0;
-            appState.players.forEach(p => { p.score=0; p.mistakes=0; });
+            appState.players.forEach(p => { 
+                p.score=0; p.mistakes=0; p.wordIdx = 0; p.lives = 3; p.finished = false;
+            });
+            
             appState.timer = (appState.difficulty==='hard' ? 60 : (appState.difficulty==='easy' ? 120 : 90));
             document.getElementById('dispTimer').innerText = appState.timer;
-            loadRound();
-            if(appState.mode===2) { document.getElementById('p2-panel').style.display='flex'; }
-            else { document.getElementById('p2-panel').style.display='none'; }
+            
+            loadPlayerQuestion(1);
+            if(appState.mode===2) { 
+                document.getElementById('p2-panel').style.display='flex'; 
+                loadPlayerQuestion(2);
+            } else { 
+                document.getElementById('p2-panel').style.display='none'; 
+            }
+            
             showScreen('game-screen');
             startTimer(); 
         }
 
-        function loadRound() {
-            const raw = appState.questionQueue[appState.currentWordIdx];
-            const wordArab = raw[0]; const wordArti = raw[1]; const wordImg = raw[2]; // Using auto-generated link
+        function loadPlayerQuestion(pNum) {
+            const pIdx = pNum - 1;
+            const player = appState.players[pIdx];
+
+            if (player.wordIdx >= appState.questionQueue.length) {
+                player.finished = true;
+                document.getElementById(`p${pNum}-overlay`).style.display = 'flex';
+                document.getElementById(`p${pNum}-overlay`).innerHTML = `<div>✅ SELESAI</div><div style="font-size:1rem; margin-top:10px;">Menunggu Waktu...</div>`;
+                return;
+            }
+
+            const raw = appState.questionQueue[player.wordIdx];
+            const wordArab = raw[0]; const wordArti = raw[1]; const wordImg = raw[2]; 
+
             const segments = parseArabicWord(wordArab);
             const structure = segments.map(seg => ({ base: seg[0], harakat: seg.substring(1), full: seg }));
             let pool = structure.map((s, i) => ({ ...s, id: 'c'+i }));
@@ -420,39 +413,33 @@
                 pool.push({ base: randChar, harakat: "َ", full: randChar+"َ", id: 'd'+i });
             }
             pool.sort(() => Math.random() - 0.5);
-            appState.currentLevel = { word: wordArab, meaning: wordArti, image: wordImg, structure: structure, pool: pool };
-            document.getElementById('roundDisp').innerText = `Soal ${appState.currentWordIdx + 1}/${appState.questionQueue.length}`;
-            appState.players.forEach(p => { p.lives=3; p.finished=false; }); 
-            setupPlayerBoard(1); if(appState.mode === 2) setupPlayerBoard(2);
+
+            player.currentWord = { word: wordArab, meaning: wordArti, image: wordImg, structure: structure, pool: pool };
+            document.getElementById(`p${pNum}-round-disp`).innerText = `Soal ${player.wordIdx + 1}/${appState.questionQueue.length}`;
+            renderPlayerBoard(pNum, player.currentWord);
         }
 
-        function setupPlayerBoard(pNum) {
-            const lvl = appState.currentLevel;
+        function renderPlayerBoard(pNum, lvl) {
             document.getElementById(`p${pNum}-overlay`).style.display = 'none';
             document.getElementById(`p${pNum}-name-disp`).innerText = appState.players[pNum-1].name;
             document.getElementById(`p${pNum}-lives`).innerText = "❤️❤️❤️";
             document.getElementById(`p${pNum}-score-disp`).innerText = appState.players[pNum-1].score;
             document.getElementById(`p${pNum}-msg`).innerText = "";
             
-            // Image Fallback
             const imgEl = document.getElementById(`p${pNum}-img`);
             imgEl.src = lvl.image;
             imgEl.onerror = function() { this.src = placeholderImg; }; 
 
             document.getElementById(`p${pNum}-check`).style.display = 'none';
-
-            // SHOW ARTI INDONESIA
             document.getElementById(`p${pNum}-meaning`).innerText = lvl.meaning;
 
-            // SHOW HINT FOR DIFFICULTY 'EASY'
             const hintEl = document.getElementById(`p${pNum}-hint`);
             if (appState.difficulty === 'easy') { hintEl.innerText = lvl.word; hintEl.style.display = 'block'; }
-            else { hintEl.innerText = lvl.word; hintEl.style.display = 'none'; } // Hidden but text set for later reveal
+            else { hintEl.innerText = lvl.word; hintEl.style.display = 'none'; }
 
             const sArea = document.getElementById(`p${pNum}-slots`); sArea.innerHTML = '';
             lvl.structure.forEach(() => {
                 const s = document.createElement('div'); s.className = 'slot'; 
-                // Klik untuk menghapus (opsional/alternatif drag)
                 s.onclick = removeLetter;
                 sArea.appendChild(s);
             });
@@ -464,13 +451,11 @@
                 d.textContent = item.full; d.id = `p${pNum}-${item.id}`;
                 d.dataset.full = item.full; d.dataset.base = item.base; d.dataset.harakat = item.harakat;
                 initTouchDrag(d); 
-                // Mouse fallback
                 d.draggable = true;
                 d.ondragstart = (e) => { e.dataTransfer.setData("text", d.id); };
                 pArea.appendChild(d);
             });
 
-            // Mouse Drop Fallback
             sArea.querySelectorAll('.slot').forEach(s => {
                 s.ondragover = e => e.preventDefault();
                 s.ondrop = (e) => { e.preventDefault(); if(s.children.length>0) return; const id=e.dataTransfer.getData("text"); if(id.startsWith(`p${pNum}`)) placeLetter(document.getElementById(id), s); };
@@ -497,8 +482,6 @@
         }
 
         // --- INTERACTION (MULTI-TOUCH DRAG) ---
-        // activeDrags defined globally
-
         function initTouchDrag(el) {
             el.addEventListener('touchstart', (e) => { 
                 e.preventDefault(); 
@@ -545,14 +528,12 @@
             
             if(target && target.closest('.slot')) {
                 const slot = target.closest('.slot');
-                // Validasi pemain
                 if(slot.children.length===0) {
                     const elP = el.id.startsWith('p1') ? 1 : 2; 
                     const slotP = slot.parentElement.id.includes('p1') ? 1 : 2;
                     if(elP === slotP) { placeLetter(el, slot); return; }
                 }
             }
-            // Reset posisi jika tidak drop di slot
             el.style.position=''; el.style.left=''; el.style.top='';
         }
 
@@ -562,10 +543,7 @@
             clone.id = ""; clone.dataset.oid = el.id; 
             clone.classList.remove('touch-dragging'); 
             clone.style.position=''; 
-            
-            // Klik clone di slot untuk mengembalikan huruf (opsi tambahan selain drag)
             clone.onclick = (e) => { e.stopPropagation(); restoreLetter(clone, slot, pNum); };
-            
             slot.appendChild(clone); 
             el.classList.add('hidden'); 
             updateForms(pNum); 
@@ -588,49 +566,53 @@
                 document.getElementById(`p${pNum}-check`).style.display='inline-block'; 
         }
 
+        // NEW HANDLER FOR CHECK BUTTON
+        function handleCheck(e, pNum) {
+            e.preventDefault(); // Mencegah double event
+            checkAnswer(pNum);
+        }
+
         function checkAnswer(pNum) {
-            const lvl = appState.currentLevel; const slots = document.getElementById(`p${pNum}-slots`).children; let correct = true;
+            const pIdx = pNum - 1;
+            const lvl = appState.players[pIdx].currentWord;
+            const slots = document.getElementById(`p${pNum}-slots`).children;
+            let correct = true;
+            
             Array.from(slots).forEach((s, i) => {
                 if(s.children.length===0) { correct=false; return; }
                 if(s.children[0].dataset.full === lvl.structure[i].full) { s.classList.add('correct'); s.classList.remove('wrong'); }
                 else { s.classList.add('wrong'); s.classList.remove('correct'); correct=false; }
             });
-            const pIdx = pNum - 1;
+
             if(correct) {
-                appState.players[pIdx].finished = true;
                 const bonus = 10; 
                 appState.players[pIdx].score += bonus; 
                 document.getElementById(`p${pNum}-score-disp`).innerText = appState.players[pIdx].score;
                 document.getElementById(`p${pNum}-msg`).innerText = "MUMTAZ! 🎉";
                 document.getElementById(`p${pNum}-msg`).style.color = "var(--primary)";
                 document.getElementById(`p${pNum}-check`).style.display = 'none';
-                document.getElementById(`p${pNum}-overlay`).style.display = 'flex';
+                
+                document.getElementById(`p${pNum}-hint`).style.display = 'block'; // Show result
                 confetti(); document.getElementById('sfx-win').play();
-                checkRoundEnd();
+                
+                setTimeout(() => {
+                    appState.players[pIdx].wordIdx++;
+                    loadPlayerQuestion(pNum);
+                }, 1500);
+
             } else {
                 appState.players[pIdx].lives--; appState.players[pIdx].mistakes++;
                 document.getElementById(`p${pNum}-lives`).innerText = "❤️".repeat(appState.players[pIdx].lives) + "🖤".repeat(3-appState.players[pIdx].lives);
                 document.getElementById('sfx-lose').play();
                 if(appState.players[pIdx].lives <= 0) {
-                    document.getElementById(`p${pNum}-msg`).innerText = "Gagal"; document.getElementById(`p${pNum}-msg`).style.color = "var(--wrong)";
-                    appState.players[pIdx].finished = true; document.getElementById(`p${pNum}-check`).style.display = 'none';
-                    document.getElementById(`p${pNum}-overlay`).querySelector('div').innerText = "❌ GAGAL";
+                    document.getElementById(`p${pNum}-msg`).innerText = "Game Over"; 
+                    document.getElementById(`p${pNum}-msg`).style.color = "var(--wrong)";
+                    appState.players[pIdx].finished = true; 
+                    document.getElementById(`p${pNum}-check`).style.display = 'none';
+                    document.getElementById(`p${pNum}-overlay`).innerHTML = `<div>❌ GAME OVER</div><div style="font-size:1rem;">Menunggu Waktu...</div>`;
                     document.getElementById(`p${pNum}-overlay`).style.display = 'flex';
-                    checkRoundEnd();
                 }
             }
-        }
-
-        function checkRoundEnd() {
-            let advance = false;
-            if(appState.mode===1 && appState.players[0].finished) advance = true;
-            if(appState.mode===2 && appState.players[0].finished && appState.players[1].finished) advance = true;
-            if(advance) setTimeout(nextRound, 1500);
-        }
-
-        function nextRound() {
-            appState.currentWordIdx++;
-            if(appState.currentWordIdx < appState.questionQueue.length) loadRound(); else showResult();
         }
 
         function startTimer() {
@@ -646,12 +628,11 @@
             stopTimer();
             document.getElementById('result-overlay').style.display='flex';
             const content = document.getElementById('resultContent');
-            let html = `<div><h1 style="color:var(--primary); font-family:'Amiri'; margin:0;">Sesi Selesai!</h1></div><hr>`;
+            let html = `<div><h1 style="color:var(--primary); font-family:'Amiri'; margin:0;">Waktu Habis!</h1></div><hr>`;
             
             if(appState.mode === 1) {
                 const p1 = appState.players[0];
                 html += `<div>Skor Akhir: <b style="font-size:2rem">${p1.score}</b></div><div style="font-size:0.9rem">Salah: ${p1.mistakes}</div>`;
-                if(p1.score > 50) html += `<div style="color:green; font-weight:bold;">Luar Biasa!</div>`; else html += `<div style="color:#555">Tetap Semangat!</div>`;
             } else {
                 const p1 = appState.players[0]; const p2 = appState.players[1];
                 let winner = "Seri!"; let wColor = "#555";
@@ -667,7 +648,6 @@
             sendToGoogleSheet();
         }
 
-        // --- GOOGLE SHEET SEND ---
         function sendToGoogleSheet() {
             if(!GOOGLE_SCRIPT_URL) return;
             const playersToSend = [];
@@ -694,7 +674,13 @@
         function closeSettings(){ const rs=document.getElementsByName('diff'); for(let r of rs) if(r.checked) appState.difficulty=r.value; document.getElementById('settings-modal').style.display='none'; }
         function openLeaderboard(){document.getElementById('leaderboard-modal').style.display='flex'}
         function closeLeaderboard(){document.getElementById('leaderboard-modal').style.display='none'}
-        function playTTS() { const u=new SpeechSynthesisUtterance(appState.currentLevel.word); u.lang='ar-SA'; u.rate=0.8; window.speechSynthesis.speak(u); }
+        function playTTS(pNum) { 
+            const pIdx = pNum - 1;
+            if(appState.players[pIdx].currentWord) {
+                const u=new SpeechSynthesisUtterance(appState.players[pIdx].currentWord.word); 
+                u.lang='ar-SA'; u.rate=0.8; window.speechSynthesis.speak(u); 
+            }
+        }
     </script>
 </body>
 </html>
