@@ -20,7 +20,7 @@
 
         body {
             font-family: 'Fredoka', sans-serif;
-            background: url('https://img.freepik.com/free-vector/flat-nature-background_1308-20252.jpg?t=st=1764772041~exp=1764775641~hmac=38332fef1d8db1b0a1dd5f1fa8896b949376d32eaf7aeaaea0fc1695f2ed369a&w=1480') no-repeat center center fixed;
+            background: url('https://i.postimg.cc/J09KP28B/Untitled_1.png') no-repeat center center fixed;
             background-size: cover;
             margin: 0; padding: 0;
             height: 100vh; width: 100vw;
@@ -43,7 +43,7 @@
             border: 4px solid white; border-radius: 50px; cursor: pointer; outline: none; margin: 10px;
             box-shadow: 0 6px 0 rgba(0,0,0,0.2), 0 10px 20px rgba(0,0,0,0.2), inset 0 3px 0 rgba(255,255,255,0.5), inset 0 -3px 0 rgba(0,0,0,0.1);
             transition: all 0.1s; min-width: 200px; text-align: center;
-            -webkit-tap-highlight-color: transparent; user-select: none;
+            -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation;
         }
         .btn-metallic:active { transform: translateY(6px); box-shadow: 0 0 0 rgba(0,0,0,0.2), inset 0 3px 0 rgba(0,0,0,0.1); }
         .btn-green { background: linear-gradient(180deg, #2ecc71 0%, #27ae60 100%); }
@@ -55,11 +55,21 @@
         .input-box { padding: 15px; border-radius: 15px; border: 3px solid #ccc; font-size: 1.2rem; width: 100%; max-width: 300px; text-align: center; font-family: 'Fredoka', sans-serif; outline: none; margin-bottom: 10px; }
         
         /* SPLASH */
+        .logo-img { width: 100px; margin-bottom: 10px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); display: block; margin: 0 auto 10px; }
+        
+        /* JUDUL DENGAN GAMBAR JAWARA.PNG */
+        .main-title-img {
+            width: 300px; max-width: 90%;
+            display: block; margin: 10px auto;
+            filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
         .game-title-splash {
             font-family: 'Changa One', cursive; font-size: 4rem; margin: 10px 0; line-height: 1.1;
             color: var(--accent); -webkit-text-stroke: 4px white; paint-order: stroke fill; text-align: center;
         }
-        .logo-img { width: 140px; margin-bottom: 20px; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); display: block; margin: 0 auto 20px; }
+
         .school-info { font-family: sans-serif; color: white; margin-top: 20px; font-weight: bold; font-size: 1.2rem; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; text-align: center; }
         .dev-team { font-size: 0.9rem; color: white; margin-top: 5px; text-shadow: 1px 1px 2px black; text-align: center; }
 
@@ -79,7 +89,7 @@
         }
         
         .game-card { background: white; padding: 5px; border-radius: 15px; border: 2px solid white; box-shadow: 0 5px 10px rgba(0,0,0,0.1); margin-bottom: 5px; width: 95%; max-width: 300px; text-align: center; }
-        .image-preview img { width: 100%; height: 90px; object-fit: contain; }
+        .image-preview img { width: 100%; height: 80px; object-fit: contain; }
         
         /* HINT STYLE */
         .word-hint {
@@ -103,8 +113,7 @@
         .letters-pool { 
             display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; width: 98%; direction: rtl; 
             padding: 5px; background: rgba(255,255,255,0.3); border-radius: 15px; 
-            min-height: 80px; /* Reduced height */
-            margin-bottom: 5px;
+            min-height: 80px; margin-bottom: 5px;
         }
         .letter-card { width: 45px; height: 45px; background: white; border: 2px solid #bdc3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 26px; cursor: grab; box-shadow: 0 4px 0 #bdc3c7; user-select: none; touch-action: none; }
         .letter-card.touch-dragging { position: fixed; z-index: 9999; opacity: 0.9; transform: scale(1.2); pointer-events: none; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
@@ -129,29 +138,77 @@
         .level-title { font-weight: bold; color: var(--secondary); font-size: 1.1rem; }
         .level-sub { font-size: 0.8rem; color: #777; }
 
+        /* MODE TOGGLE */
+        .mode-toggle-container { 
+            display: flex; gap: 10px; margin-bottom: 15px; 
+            background: rgba(255,255,255,0.8); padding: 5px; 
+            border-radius: 50px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .mode-btn { 
+            padding: 10px 20px; border-radius: 30px; border: none; 
+            font-family: 'Fredoka'; font-weight: bold; cursor: pointer; 
+            transition: all 0.3s; background: transparent; color: #555; 
+            font-size: 1rem;
+        }
+        .mode-btn.active { 
+            background: var(--secondary); color: white; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+            transform: scale(1.05);
+        }
+
+        /* VOCABULARY BANK SCREEN */
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; width: 100%; padding-bottom: 20px; }
+        .vocab-card { background: white; border-radius: 15px; padding: 10px; text-align: center; box-shadow: 0 3px 6px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .vocab-card img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 5px; }
+        .vocab-arab { font-family: 'Amiri', serif; font-size: 1.8rem; color: var(--primary); margin: 5px 0; }
+        .vocab-indo { font-size: 0.9rem; font-weight: bold; color: #555; }
+        .vocab-play-btn { background: var(--accent); color: white; border: none; border-radius: 50%; width: 30px; height: 30px; cursor: pointer; margin-top: 5px; }
+
+        /* MODALS */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 100; }
         .modal-box { background: #fdfdfd; padding: 30px; border-radius: 20px; width: 85%; max-width: 450px; text-align: center; border: 5px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: fadeIn 0.3s; }
         
-        /* LEADERBOARD STYLE */
         .lb-list { list-style: none; padding: 0; text-align: left; max-height: 300px; overflow-y: auto; }
         .lb-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee; font-size: 1.1rem; }
         .lb-item:first-child { color: var(--accent); font-weight: bold; font-size: 1.3rem; }
+
+        .settings-section { margin: 15px 0; text-align: left; }
+        .settings-title { font-weight: bold; color: var(--primary); margin-bottom: 5px; display: block; }
+        .radio-group { background: #eee; padding: 10px; border-radius: 10px; }
+        .radio-item { display: block; margin: 5px 0; cursor: pointer; }
+        
+        /* INSTRUCTIONS LIST */
+        .instruction-list { text-align: left; margin: 10px 0; font-size: 0.9rem; color: #555; }
+        .instruction-list li { margin-bottom: 5px; }
 
         #toast { visibility: hidden; min-width: 250px; background-color: #333; color: #fff; text-align: center; border-radius: 50px; padding: 16px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-size: 17px; opacity: 0; transition: opacity 0.3s; }
         #toast.show { visibility: visible; opacity: 1; }
 
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @keyframes shake { 0%,100% {transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
+        
+        /* Audio Check Button */
+        .audio-check { position:absolute; top:20px; left:20px; font-size:1.5rem; background:rgba(255,255,255,0.3); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; border:2px solid white; }
     </style>
 </head>
 <body>
 
-    <!-- 1. SPLASH -->
+    <!-- 1. SPLASH (WAJIB KLIK TOMBOL) -->
     <div id="splash-screen" class="screen active">
+        <div class="audio-check" onclick="testSound(event)">🔊</div>
         <img src="logo.png" alt="Logo Sekolah" class="logo-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2602/2602414.png'">
-        <div class="game-title-splash">JAWARA<br>SUSUN KATA</div>
+        
+        <!-- JUDUL DARI GAMBAR -->
+        <img src="jawara.png" alt="JAWARA SUSUN KATA" class="main-title-img" onerror="this.style.display='none'; document.getElementById('fallback-title').style.display='block';">
+        <div id="fallback-title" class="game-title-splash" style="display:none;">JAWARA<br>SUSUN KATA</div>
+
         <div class="school-info">SDIT Qurratu A'yun Al-Islami Maros</div>
         <div class="dev-team">Tim Pengembang Sekolah</div>
+        <div style="margin-top:40px;">
+            <!-- Tombol ini memicu Audio Context -->
+            <button class="btn-metallic btn-green" onclick="initAudioContext()" style="font-size: 1.5rem; padding: 15px 50px; animation: shake 3s infinite;">KLIK UNTUK MULAI</button>
+        </div>
     </div>
 
     <!-- 2. MODE SELECT -->
@@ -159,13 +216,16 @@
         <h2 class="menu-title">Pilih Mode Main</h2>
         <button class="btn-metallic btn-blue" onclick="selectMode(1)">👤 1 Player</button>
         <button class="btn-metallic btn-orange" onclick="selectMode(2)">👥 2 Player</button>
+        
+        <!-- Tombol Petunjuk (KEMBALI MERAH) -->
+        <button class="btn-metallic btn-red" onclick="openInstructions()" style="margin-top: 20px; font-size: 1rem; padding: 10px 20px;">❓ Petunjuk Permainan</button>
     </div>
 
     <!-- 3. INPUT NAMA -->
     <div id="entry-screen" class="screen">
         <h2 class="menu-title" id="entryTitle">Masukkan Nama</h2>
         <div id="inputContainer" style="width: 100%; display: flex; flex-direction: column; align-items: center;"></div>
-        <button class="btn-metallic btn-green" onclick="submitName()">🚀 MULAI</button>
+        <button class="btn-metallic btn-green" onclick="submitName()">🚀 MASUK</button>
         <div class="icon-btn-container" style="display:flex; gap:15px; margin-top:20px; justify-content:center;">
             <button class="nav-btn" onclick="openSettings()">⚙️</button>
             <button class="nav-btn" onclick="openLeaderboard()">🏆</button>
@@ -173,9 +233,15 @@
         </div>
     </div>
 
-    <!-- 4. LEVEL SELECT -->
+    <!-- 4. LEVEL / THEME SELECT -->
     <div id="level-screen" class="screen">
-        <h2 class="menu-title" style="margin-bottom:10px;">Pilih Tema</h2>
+        <div class="mode-toggle-container">
+            <button id="btnPlayMode" class="mode-btn active" onclick="setAppMode('play')">🎮 MODE BERMAIN</button>
+            <button id="btnStudyMode" class="mode-btn" onclick="setAppMode('study')">📖 BANK KOSAKATA</button>
+        </div>
+        
+        <h2 class="menu-title" id="themeTitle" style="margin-bottom:10px; font-size:1.8rem;">Pilih Tema</h2>
+        
         <div class="level-scroll-container">
             <div id="levelGrid" class="level-grid"></div>
         </div>
@@ -244,6 +310,18 @@
         </div>
     </div>
 
+    <!-- VOCABULARY SCREEN -->
+    <div id="vocab-screen" class="screen">
+        <div class="top-bar">
+            <button class="nav-btn" onclick="showScreen('level-screen')">🔙</button>
+            <div style="font-family:'Changa One'; font-size:1.5rem; color:var(--secondary);" id="vocabTitle">Bank Kosakata</div>
+            <div style="width:40px;"></div> 
+        </div>
+        <div class="level-scroll-container" style="margin-top:80px;">
+            <div id="vocabGrid" class="vocab-grid"></div>
+        </div>
+    </div>
+
     <!-- MODALS -->
     <div id="result-overlay" class="modal-overlay">
         <div class="modal-box" style="border-color: var(--accent);">
@@ -255,35 +333,111 @@
 
     <div id="settings-modal" class="modal-overlay">
         <div class="modal-box">
-            <h2>Pengaturan</h2>
-            <label><input type="radio" name="diff" value="easy"> Santai (120s)</label>
-            <label><input type="radio" name="diff" value="normal" checked> Normal (90s)</label>
-            <label><input type="radio" name="diff" value="hard"> Ngebut (60s)</label>
-            <br><br>
+            <h2 class="menu-title">Pengaturan</h2>
+            <div class="settings-section">
+                <span class="settings-title">Waktu Permainan:</span>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="time" value="180"> 180 Detik (Ada Bantuan)</label>
+                    <label class="radio-item"><input type="radio" name="time" value="150"> 150 Detik (Ada Bantuan)</label>
+                    <label class="radio-item"><input type="radio" name="time" value="120" checked> 120 Detik (Ada Bantuan)</label>
+                    <label class="radio-item"><input type="radio" name="time" value="90"> 90 Detik (Tanpa Bantuan)</label>
+                    <label class="radio-item"><input type="radio" name="time" value="60"> 60 Detik (Tanpa Bantuan)</label>
+                </div>
+            </div>
+            <div class="settings-section">
+                <span class="settings-title">Suara & Musik:</span>
+                <div class="radio-group">
+                    <label class="radio-item"><input type="radio" name="sound" value="on" checked> Hidup (On)</label>
+                    <label class="radio-item"><input type="radio" name="sound" value="off"> Mati (Off)</label>
+                </div>
+            </div>
             <button class="btn-metallic btn-blue" onclick="closeSettings()">Simpan</button>
         </div>
     </div>
 
     <div id="leaderboard-modal" class="modal-overlay">
         <div class="modal-box">
-            <h2>🏆 Top Skor</h2>
+            <h2>🏆 Top 3 Skor</h2>
             <div id="lb-container" style="min-height:100px; display:flex; align-items:center; justify-content:center;">
-                <!-- List Kosong -->
                 <ul id="lb-list" class="lb-list" style="width:100%;"></ul>
-                <div id="lb-empty-msg" style="color:#888;">Belum ada skor hari ini.<br>Ayo main!</div>
+                <div id="lb-empty-msg" style="color:#888;">Belum ada skor.<br>Jadilah yang pertama!</div>
             </div>
             <button class="btn-metallic btn-red" onclick="closeLeaderboard()">Tutup</button>
         </div>
     </div>
 
-    <audio id="sfx-pop" src="https://actions.google.com/sounds/v1/cartoon/pop_egg.ogg"></audio>
-    <audio id="sfx-win" src="https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg"></audio>
-    <audio id="sfx-lose" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+    <div id="instruction-modal" class="modal-overlay">
+        <div class="modal-box" style="text-align: left;">
+            <h2 class="menu-title" style="margin-bottom: 10px;">Petunjuk Permainan</h2>
+            <ul class="instruction-list">
+                <li>1. Pilih Mode 1 Player atau 2 Player.</li>
+                <li>2. Pilih Tema/Sesi yang ingin dimainkan.</li>
+                <li>3. Susun huruf-huruf Arab menjadi kata yang sesuai dengan gambar.</li>
+                <li>4. <b>Geser (Drag)</b> huruf ke kotak kosong yang tersedia.</li>
+                <li>5. Jika salah, ketuk huruf di dalam kotak untuk menghapusnya.</li>
+                <li>6. Selesaikan 10 soal sebelum waktu habis!</li>
+            </ul>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-metallic btn-blue" onclick="closeInstructions()">Saya Mengerti</button>
+            </div>
+        </div>
+    </div>
+    
     <div id="toast">Notifikasi</div>
 
     <script>
         // --- KONFIGURASI GOOGLE SHEET ---
         const GOOGLE_SCRIPT_URL = ""; 
+
+        // --- ROBUST AUDIO ENGINE ---
+        let audioCtx;
+        function initAudioContext() {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            playTone(0, 0.1); 
+            showScreen('mode-screen');
+        }
+
+        function playTone(freq, type = 'sine') {
+            if (!audioCtx) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        const sounds = {
+            pop: new Audio("https://actions.google.com/sounds/v1/cartoon/pop_egg.ogg"),
+            win: new Audio("https://actions.google.com/sounds/v1/cartoon/magic_chime.ogg"),
+            lose: new Audio("https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg")
+        };
+
+        function playSound(type) {
+            if (appState.sound === 'off') return;
+            
+            const sound = sounds[type];
+            if (sound) {
+                const clone = sound.cloneNode();
+                clone.play().catch(e => {
+                    // Fallback to synth if file fails
+                    if(type === 'pop') playTone(600, 'triangle');
+                    if(type === 'win') { playTone(500, 'sine'); setTimeout(()=>playTone(800, 'sine'), 100); setTimeout(()=>playTone(1000, 'sine'), 200); }
+                    if(type === 'lose') { playTone(300, 'sawtooth'); setTimeout(()=>playTone(200, 'sawtooth'), 200); }
+                });
+            }
+        }
+        
+        function testSound(e) {
+            e.stopPropagation();
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            audioCtx.resume().then(() => { playSound('win'); showToast("🔊 Tes Suara"); });
+        }
 
         // --- DATA INPUT ---
         const rawVocabData = [
@@ -326,9 +480,9 @@
         });
 
         // --- GLOBAL VARIABLES ---
-        let appState = { mode: 1, difficulty: "normal", currentThemeIdx: 0, currentWordIdx: 0, timer: 0, interval: null, questionQueue: [], players: [ { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null }, { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null } ] };
-        let activeDrags = {}; 
-        let localHighScores = []; // SESSION-ONLY LEADERBOARD
+        let appState = { mode: 1, timeLimit: 120, sound: "on", appMode: "play", currentThemeIdx: 0, currentWordIdx: 0, timer: 0, interval: null, questionQueue: [], players: [ { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null }, { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null } ] };
+        let activeDrags = {};
+        let localHighScores = [];
         const placeholderImg = "https://cdn-icons-png.flaticon.com/512/3330/3330314.png"; 
 
         const arabicLetters = /[\u0621-\u064A]/;
@@ -348,27 +502,87 @@
 
         // --- INIT & NAVIGATION ---
         window.onload = function() {
-            setTimeout(() => { showScreen('mode-screen'); }, 3000);
             renderThemeButtons();
+            loadScores(); 
+
+            // Global Click Sound
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-metallic, .level-card, .nav-btn, .icon-btn, .mode-btn')) playSound('pop');
+            });
+            // Typing Sound
+            let lastTypeTime = 0;
+            document.addEventListener('input', function(e) {
+                if (e.target.tagName === 'INPUT' && e.target.type === 'text') {
+                    const now = Date.now();
+                    if(now - lastTypeTime > 100) { 
+                        playSound('pop');
+                        lastTypeTime = now;
+                    }
+                }
+            });
+            // Check Buttons
+            document.getElementById('p1-check').addEventListener('pointerdown', function(e) { handleCheck(e, 1); });
+            document.getElementById('p2-check').addEventListener('pointerdown', function(e) { handleCheck(e, 2); });
         };
+
+        function setAppMode(mode) {
+            appState.appMode = mode;
+            document.getElementById('btnPlayMode').className = mode === 'play' ? 'mode-btn active' : 'mode-btn';
+            document.getElementById('btnStudyMode').className = mode === 'study' ? 'mode-btn active' : 'mode-btn';
+        }
 
         function renderThemeButtons() {
             const grid = document.getElementById('levelGrid'); grid.innerHTML = "";
             vocabData.forEach((theme, idx) => {
-                const btn = document.createElement('div'); btn.className = "level-card"; btn.onclick = () => startGame(idx);
+                const btn = document.createElement('div'); btn.className = "level-card"; 
+                btn.onclick = () => handleThemeClick(idx);
                 const icon = ["📚","👕","✏️","🏫","🏡","🛋️","🏥","👷","🧕","👨‍👩‍👧","🍎","☕","🥄","🦁","🎨"][idx % 15] || "🌟";
                 btn.innerHTML = `<div style="font-size:2.5rem">${icon}</div><div class="level-title">Sesi ${idx+1}</div><div class="level-sub">${theme.theme}</div>`;
                 grid.appendChild(btn);
             });
         }
 
+        function handleThemeClick(idx) {
+            if(appState.appMode === 'play') {
+                startGame(idx);
+            } else {
+                openVocabBank(idx);
+            }
+        }
+
+        function openVocabBank(idx) {
+            const data = vocabData[idx];
+            const grid = document.getElementById('vocabGrid');
+            grid.innerHTML = "";
+            document.getElementById('vocabTitle').innerText = data.theme;
+            
+            data.items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "vocab-card";
+                const imgUrl = item[2] || placeholderImg;
+                card.innerHTML = `
+                    <img src="${imgUrl}" onerror="this.src='${placeholderImg}'">
+                    <div class="vocab-arab">${item[0]}</div>
+                    <div class="vocab-indo">${item[1]}</div>
+                    <button class="vocab-play-btn" onclick="speakText('${item[0]}')">🔊</button>
+                `;
+                grid.appendChild(card);
+            });
+            showScreen('vocab-screen');
+        }
+
+        function speakText(text) {
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang='ar-SA'; u.rate=0.8; window.speechSynthesis.speak(u);
+        }
+
         function showScreen(id) { stopTimer(); document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
         function selectMode(m) {
             appState.mode = m;
             const container = document.getElementById('inputContainer'); container.innerHTML = '';
-            container.innerHTML += `<input type="text" id="name1" class="input-box" placeholder="Nama Pemain 1">`;
+            container.innerHTML += `<input type="text" id="name1" class="input-box" placeholder="Nama Pemain 1" oninput="playSound('pop')">`;
             if(m === 2) {
-                container.innerHTML += `<input type="text" id="name2" class="input-box" placeholder="Nama Pemain 2">`;
+                container.innerHTML += `<input type="text" id="name2" class="input-box" placeholder="Nama Pemain 2" oninput="playSound('pop')">`;
                 document.getElementById('entryTitle').innerText = "Masukkan Nama Pemain";
             } else { document.getElementById('entryTitle').innerText = "Siapa Namamu?"; }
             showScreen('entry-screen');
@@ -389,36 +603,25 @@
             appState.players.forEach(p => { 
                 p.score=0; p.mistakes=0; p.wordIdx = 0; p.lives = 3; p.finished = false;
             });
-            
-            appState.timer = (appState.difficulty==='hard' ? 60 : (appState.difficulty==='easy' ? 120 : 90));
+            appState.timer = parseInt(appState.timeLimit);
             document.getElementById('dispTimer').innerText = appState.timer;
-            
             loadPlayerQuestion(1);
-            if(appState.mode===2) { 
-                document.getElementById('p2-panel').style.display='flex'; 
-                loadPlayerQuestion(2);
-            } else { 
-                document.getElementById('p2-panel').style.display='none'; 
-            }
-            
+            if(appState.mode===2) { document.getElementById('p2-panel').style.display='flex'; loadPlayerQuestion(2); }
+            else { document.getElementById('p2-panel').style.display='none'; }
             showScreen('game-screen');
             startTimer(); 
         }
 
         function loadPlayerQuestion(pNum) {
-            const pIdx = pNum - 1;
-            const player = appState.players[pIdx];
-
+            const pIdx = pNum - 1; const player = appState.players[pIdx];
             if (player.wordIdx >= appState.questionQueue.length) {
                 player.finished = true;
                 document.getElementById(`p${pNum}-overlay`).style.display = 'flex';
                 document.getElementById(`p${pNum}-overlay`).innerHTML = `<div>✅ SELESAI</div><div style="font-size:1rem; margin-top:10px;">Menunggu Waktu...</div>`;
                 return;
             }
-
             const raw = appState.questionQueue[player.wordIdx];
             const wordArab = raw[0]; const wordArti = raw[1]; const wordImg = raw[2]; 
-
             const segments = parseArabicWord(wordArab);
             const structure = segments.map(seg => ({ base: seg[0], harakat: seg.substring(1), full: seg }));
             let pool = structure.map((s, i) => ({ ...s, id: 'c'+i }));
@@ -428,7 +631,6 @@
                 pool.push({ base: randChar, harakat: "َ", full: randChar+"َ", id: 'd'+i });
             }
             pool.sort(() => Math.random() - 0.5);
-
             player.currentWord = { word: wordArab, meaning: wordArti, image: wordImg, structure: structure, pool: pool };
             document.getElementById(`p${pNum}-round-disp`).innerText = `Soal ${player.wordIdx + 1}/${appState.questionQueue.length}`;
             renderPlayerBoard(pNum, player.currentWord);
@@ -440,44 +642,33 @@
             document.getElementById(`p${pNum}-lives`).innerText = "❤️❤️❤️";
             document.getElementById(`p${pNum}-score-disp`).innerText = appState.players[pNum-1].score;
             document.getElementById(`p${pNum}-msg`).innerText = "";
-            
             const imgEl = document.getElementById(`p${pNum}-img`);
-            imgEl.src = lvl.image;
-            imgEl.onerror = function() { this.src = placeholderImg; }; 
-
+            imgEl.src = lvl.image; imgEl.onerror = function() { this.src = placeholderImg; }; 
             document.getElementById(`p${pNum}-check`).style.display = 'none';
             document.getElementById(`p${pNum}-meaning`).innerText = lvl.meaning;
-
+            
             const hintEl = document.getElementById(`p${pNum}-hint`);
-            if (appState.difficulty === 'easy') { hintEl.innerText = lvl.word; hintEl.style.display = 'block'; }
+            if (parseInt(appState.timeLimit) >= 120) { hintEl.innerText = lvl.word; hintEl.style.display = 'block'; }
             else { hintEl.innerText = lvl.word; hintEl.style.display = 'none'; }
-
+            
             const sArea = document.getElementById(`p${pNum}-slots`); sArea.innerHTML = '';
-            lvl.structure.forEach(() => {
-                const s = document.createElement('div'); s.className = 'slot'; 
-                s.onclick = removeLetter;
-                sArea.appendChild(s);
-            });
-
+            lvl.structure.forEach(() => { const s = document.createElement('div'); s.className = 'slot'; s.onclick = removeLetter; sArea.appendChild(s); });
             const pArea = document.getElementById(`p${pNum}-pool`); pArea.innerHTML = '';
             const myPool = JSON.parse(JSON.stringify(lvl.pool)).sort(()=>Math.random()-0.5);
             myPool.forEach(item => {
                 const d = document.createElement('div'); d.className = 'letter-card';
                 d.textContent = item.full; d.id = `p${pNum}-${item.id}`;
                 d.dataset.full = item.full; d.dataset.base = item.base; d.dataset.harakat = item.harakat;
-                initTouchDrag(d); 
-                d.draggable = true;
+                initTouchDrag(d); d.draggable = true;
                 d.ondragstart = (e) => { e.dataTransfer.setData("text", d.id); };
                 pArea.appendChild(d);
             });
-
             sArea.querySelectorAll('.slot').forEach(s => {
                 s.ondragover = e => e.preventDefault();
                 s.ondrop = (e) => { e.preventDefault(); if(s.children.length>0) return; const id=e.dataTransfer.getData("text"); if(id.startsWith(`p${pNum}`)) placeLetter(document.getElementById(id), s); };
             });
         }
 
-        // --- ARABIC LOGIC ---
         const letterForms = { 'ك':{isolated:'ك',initial:'ﻛ',medial:'ﻜ',final:'ﻚ'}, 'ت':{isolated:'ت',initial:'ﺗ',medial:'ﺘ',final:'ﺖ'}, 'ا':{isolated:'ا',initial:'ا',medial:'ﺎ',final:'ﺎ'}, 'ب':{isolated:'ب',initial:'ﺑ',medial:'ﺒ',final:'ﺐ'}, 'ن':{isolated:'ن',initial:'ﻧ',medial:'ﻨ',final:'ﻦ'}, 'ي':{isolated:'ي',initial:'ﻳ',medial:'ﻴ',final:'ﻲ'}, 'ع':{isolated:'ع',initial:'ﻋ',medial:'ﻌ',final:'ﻊ'}, 'غ':{isolated:'غ',initial:'ﻏ',medial:'ﻐ',final:'ﻎ'}, 'ق':{isolated:'ق',initial:'ﻗ',medial:'ﻘ',final:'ﻖ'}, 'ل':{isolated:'ل',initial:'ﻟ',medial:'ﻠ',final:'ﻞ'}, 'م':{isolated:'م',initial:'ﻣ',medial:'ﻤ',final:'ﻢ'}, 'س':{isolated:'س',initial:'ﺳ',medial:'ﺴ',final:'ﺲ'}, 'ش':{isolated:'ش',initial:'ﺷ',medial:'ﺸ',final:'ﺶ'}, 'ص':{isolated:'ص',initial:'ﺻ',medial:'ﺼ',final:'ﺺ'}, 'ض':{isolated:'ض',initial:'ﺿ',medial:'ﻀ',final:'ﺾ'}, 'ط':{isolated:'ط',initial:'ﻃ',medial:'ﻄ',final:'ﻂ'}, 'ظ':{isolated:'ظ',initial:'ﻇ',medial:'ﻈ',final:'ﻆ'}, 'ه':{isolated:'ه',initial:'ﻫ',medial:'ﻬ',final:'ﻪ'}, 'ج':{isolated:'ج',initial:'ﺟ',medial:'ﺠ',final:'ﺞ'}, 'ح':{isolated:'ح',initial:'ﺣ',medial:'ﺤ',final:'ﺢ'}, 'خ':{isolated:'خ',initial:'ﺧ',medial:'ﺨ',final:'ﺦ'}, 'ث':{isolated:'ث',initial:'ﺛ',medial:'ﺜ',final:'ﺚ'}, 'ف':{isolated:'ف',initial:'ﻓ',medial:'ﻔ',final:'ﻒ'} };
         const nonConnectors = ['ا','د','ذ','ر','ز','و','ؤ','آ','أ','إ'];
 
@@ -486,8 +677,7 @@
             Array.from(slots).forEach((slot, i) => {
                 if(slot.children.length===0) return;
                 const card = slot.children[0]; const base = card.dataset.base;
-                const hasRight = (i>0 && slots[i-1].children.length>0);
-                const hasLeft = (i<slots.length-1 && slots[i+1].children.length>0);
+                const hasRight = (i>0 && slots[i-1].children.length>0); const hasLeft = (i<slots.length-1 && slots[i+1].children.length>0);
                 let isRightNonConn = false;
                 if(hasRight) { const rightBase = slots[i-1].children[0].dataset.base; if(nonConnectors.includes(rightBase)) isRightNonConn = true; }
                 let form = 'isolated';
@@ -496,103 +686,58 @@
             });
         }
 
-        // --- INTERACTION (MULTI-TOUCH DRAG) ---
+        // --- INTERACTION ---
         function initTouchDrag(el) {
             el.addEventListener('touchstart', (e) => { 
-                e.preventDefault(); 
-                const touch = e.changedTouches[0];
-                activeDrags[touch.identifier] = { 
-                    el: el, startX: touch.clientX, startY: touch.clientY, 
-                    startTime: Date.now(), origL: el.style.left, origT: el.style.top 
-                };
-                el.classList.add('touch-dragging'); 
-                moveElement(el, touch.clientX, touch.clientY); 
-                document.getElementById('sfx-pop').play();
+                e.preventDefault(); const touch = e.changedTouches[0];
+                activeDrags[touch.identifier] = { el: el, startX: touch.clientX, startY: touch.clientY, startTime: Date.now(), origL: el.style.left, origT: el.style.top };
+                el.classList.add('touch-dragging'); moveElement(el, touch.clientX, touch.clientY); playSound('pop');
             }, {passive:false});
-
             el.addEventListener('touchmove', (e) => { 
-                e.preventDefault(); 
-                for (let i = 0; i < e.changedTouches.length; i++) {
-                    const touch = e.changedTouches[i];
-                    if (activeDrags[touch.identifier]) {
-                        moveElement(activeDrags[touch.identifier].el, touch.clientX, touch.clientY);
-                    }
+                e.preventDefault(); for (let i = 0; i < e.changedTouches.length; i++) {
+                    const touch = e.changedTouches[i]; if (activeDrags[touch.identifier]) moveElement(activeDrags[touch.identifier].el, touch.clientX, touch.clientY);
                 }
             }, {passive:false});
-
             el.addEventListener('touchend', (e) => { 
-                e.preventDefault(); 
-                for (let i = 0; i < e.changedTouches.length; i++) {
-                    const touch = e.changedTouches[i];
-                    const data = activeDrags[touch.identifier];
-                    if (data) {
-                        handleDrop(data.el, touch.clientX, touch.clientY);
-                        delete activeDrags[touch.identifier];
-                    }
+                e.preventDefault(); for (let i = 0; i < e.changedTouches.length; i++) {
+                    const touch = e.changedTouches[i]; const data = activeDrags[touch.identifier];
+                    if (data) { handleDrop(data.el, touch.clientX, touch.clientY); delete activeDrags[touch.identifier]; }
                 }
             });
         }
-
         function moveElement(el, x, y) { el.style.left=(x-25)+'px'; el.style.top=(y-50)+'px'; }
-
         function handleDrop(el, x, y) {
-            el.classList.remove('touch-dragging'); 
-            el.style.display='none';
-            let target = document.elementFromPoint(x, y); 
-            el.style.display='';
-            
+            el.classList.remove('touch-dragging'); el.style.display='none';
+            let target = document.elementFromPoint(x, y); el.style.display='';
             if(target && target.closest('.slot')) {
                 const slot = target.closest('.slot');
                 if(slot.children.length===0) {
-                    const elP = el.id.startsWith('p1') ? 1 : 2; 
-                    const slotP = slot.parentElement.id.includes('p1') ? 1 : 2;
+                    const elP = el.id.startsWith('p1') ? 1 : 2; const slotP = slot.parentElement.id.includes('p1') ? 1 : 2;
                     if(elP === slotP) { placeLetter(el, slot); return; }
                 }
             }
             el.style.position=''; el.style.left=''; el.style.top='';
         }
-
         function placeLetter(el, slot) {
             const pNum = slot.parentElement.id.includes('p1') ? 1 : 2;
-            const clone = el.cloneNode(true); 
-            clone.id = ""; clone.dataset.oid = el.id; 
-            clone.classList.remove('touch-dragging'); 
-            clone.style.position=''; 
-            clone.onclick = (e) => { e.stopPropagation(); restoreLetter(clone, slot, pNum); };
-            
-            slot.appendChild(clone); 
-            el.classList.add('hidden'); 
-            updateForms(pNum); 
-            checkCompletion(pNum);
+            const clone = el.cloneNode(true); clone.id = ""; clone.dataset.oid = el.id; 
+            clone.classList.remove('touch-dragging'); clone.style.position=''; clone.onclick = (e) => { e.stopPropagation(); restoreLetter(clone, slot, pNum); };
+            slot.appendChild(clone); el.classList.add('hidden'); updateForms(pNum); checkCompletion(pNum);
         }
-
         function removeLetter(e) {
             const slot = e.target.closest('.slot'); if(slot.children.length===0) return;
             const pNum = slot.parentElement.id.includes('p1') ? 1 : 2; restoreLetter(slot.children[0], slot, pNum);
         }
-
         function restoreLetter(child, slot, pNum) {
             document.getElementById(child.dataset.oid).classList.remove('hidden');
             slot.removeChild(child); slot.classList.remove('wrong','correct');
             updateForms(pNum); document.getElementById(`p${pNum}-check`).style.display='none';
         }
+        function checkCompletion(pNum) { if(document.getElementById(`p${pNum}-slots`).querySelectorAll('.slot:empty').length===0) document.getElementById(`p${pNum}-check`).style.display='inline-block'; }
 
-        function checkCompletion(pNum) { 
-            if(document.getElementById(`p${pNum}-slots`).querySelectorAll('.slot:empty').length===0) 
-                document.getElementById(`p${pNum}-check`).style.display='inline-block'; 
-        }
-
-        function handleCheck(e, pNum) {
-            e.preventDefault(); // Mencegah double event
-            checkAnswer(pNum);
-        }
-
+        function handleCheck(e, pNum) { e.preventDefault(); playSound('pop'); checkAnswer(pNum); }
         function checkAnswer(pNum) {
-            const pIdx = pNum - 1;
-            const lvl = appState.players[pIdx].currentWord;
-            const slots = document.getElementById(`p${pNum}-slots`).children;
-            let correct = true;
-            
+            const pIdx = pNum - 1; const lvl = appState.players[pIdx].currentWord; const slots = document.getElementById(`p${pNum}-slots`).children; let correct = true;
             Array.from(slots).forEach((s, i) => {
                 if(s.children.length===0) { correct=false; return; }
                 if(s.children[0].dataset.full === lvl.structure[i].full) { s.classList.add('correct'); s.classList.remove('wrong'); }
@@ -600,30 +745,21 @@
             });
 
             if(correct) {
-                const bonus = 10; 
-                appState.players[pIdx].score += bonus; 
+                const bonus = 10; appState.players[pIdx].score += bonus; 
                 document.getElementById(`p${pNum}-score-disp`).innerText = appState.players[pIdx].score;
                 document.getElementById(`p${pNum}-msg`).innerText = "MUMTAZ! 🎉";
                 document.getElementById(`p${pNum}-msg`).style.color = "var(--primary)";
                 document.getElementById(`p${pNum}-check`).style.display = 'none';
-                
                 document.getElementById(`p${pNum}-hint`).style.display = 'block'; 
-                confetti(); document.getElementById('sfx-win').play();
-                
-                setTimeout(() => {
-                    appState.players[pIdx].wordIdx++;
-                    loadPlayerQuestion(pNum);
-                }, 1500);
-
+                playSound('win'); confetti(); playTTS(pNum);
+                setTimeout(() => { appState.players[pIdx].wordIdx++; loadPlayerQuestion(pNum); }, 1500);
             } else {
                 appState.players[pIdx].lives--; appState.players[pIdx].mistakes++;
                 document.getElementById(`p${pNum}-lives`).innerText = "❤️".repeat(appState.players[pIdx].lives) + "🖤".repeat(3-appState.players[pIdx].lives);
-                document.getElementById('sfx-lose').play();
+                playSound('lose');
                 if(appState.players[pIdx].lives <= 0) {
-                    document.getElementById(`p${pNum}-msg`).innerText = "Game Over"; 
-                    document.getElementById(`p${pNum}-msg`).style.color = "var(--wrong)";
-                    appState.players[pIdx].finished = true; 
-                    document.getElementById(`p${pNum}-check`).style.display = 'none';
+                    document.getElementById(`p${pNum}-msg`).innerText = "Game Over"; document.getElementById(`p${pNum}-msg`).style.color = "var(--wrong)";
+                    appState.players[pIdx].finished = true; document.getElementById(`p${pNum}-check`).style.display = 'none';
                     document.getElementById(`p${pNum}-overlay`).innerHTML = `<div>❌ GAME OVER</div><div style="font-size:1rem;">Menunggu Waktu...</div>`;
                     document.getElementById(`p${pNum}-overlay`).style.display = 'flex';
                 }
@@ -644,84 +780,61 @@
             document.getElementById('result-overlay').style.display='flex';
             const content = document.getElementById('resultContent');
             let html = `<div><h1 style="color:var(--primary); font-family:'Amiri'; margin:0;">Waktu Habis!</h1></div><hr>`;
-            
-            // Add score to local leaderboard
             if(appState.mode === 1) {
                 addToLeaderboard(appState.players[0].name, appState.players[0].score);
                 html += `<div>Skor Akhir: <b style="font-size:2rem">${appState.players[0].score}</b></div><div style="font-size:0.9rem">Salah: ${appState.players[0].mistakes}</div>`;
             } else {
-                addToLeaderboard(appState.players[0].name, appState.players[0].score);
-                addToLeaderboard(appState.players[1].name, appState.players[1].score);
-                
+                addToLeaderboard(appState.players[0].name, appState.players[0].score); addToLeaderboard(appState.players[1].name, appState.players[1].score);
                 const p1 = appState.players[0]; const p2 = appState.players[1];
                 let winner = "Seri!"; let wColor = "#555";
                 if(p1.score > p2.score) { winner = p1.name + " Menang!"; wColor= "var(--primary)"; }
                 else if(p2.score > p1.score) { winner = p2.name + " Menang!"; wColor= "var(--accent)"; }
-                html += `<div style="display:flex; justify-content:space-around; align-items:center; margin-top:20px;">
-                    <div><h3>${p1.name}</h3><h1 style="color:var(--primary)">${p1.score}</h1><small>Salah: ${p1.mistakes}</small></div>
-                    <div style="font-size:1.5rem; color:#ccc;">VS</div>
-                    <div><h3>${p2.name}</h3><h1 style="color:var(--accent)">${p2.score}</h1><small>Salah: ${p2.mistakes}</small></div>
-                </div><h1 style="color:${wColor}; margin-top:20px; font-family:'Changa One'">${winner}</h1>`;
+                html += `<div style="display:flex; justify-content:space-around; align-items:center; margin-top:20px;"><div><h3>${p1.name}</h3><h1 style="color:var(--primary)">${p1.score}</h1><small>Salah: ${p1.mistakes}</small></div><div style="font-size:1.5rem; color:#ccc;">VS</div><div><h3>${p2.name}</h3><h1 style="color:var(--accent)">${p2.score}</h1><small>Salah: ${p2.mistakes}</small></div></div><h1 style="color:${wColor}; margin-top:20px; font-family:'Changa One'">${winner}</h1>`;
             }
             content.innerHTML = html;
             sendToGoogleSheet();
         }
 
-        // --- LEADERBOARD LOGIC ---
-        function addToLeaderboard(name, score) {
-            if(score > 0) {
-                localHighScores.push({name, score});
-                localHighScores.sort((a, b) => b.score - a.score);
-                localHighScores = localHighScores.slice(0, 5); // Keep top 5
-            }
+        // --- PERSISTENT LEADERBOARD ---
+        function loadScores() {
+            const stored = localStorage.getItem('jawaraScores');
+            if(stored) localHighScores = JSON.parse(stored);
         }
-
+        function saveScore(name, score) {
+            if(score <= 0) return;
+            localHighScores.push({name, score});
+            localHighScores.sort((a, b) => b.score - a.score);
+            localHighScores = localHighScores.slice(0, 3); // KEEP TOP 3
+            localStorage.setItem('jawaraScores', JSON.stringify(localHighScores));
+        }
+        function addToLeaderboard(name, score) {
+            saveScore(name, score);
+        }
         function openLeaderboard(){
-            const list = document.getElementById('lb-list');
-            const msg = document.getElementById('lb-empty-msg');
-            list.innerHTML = "";
-            
-            if(localHighScores.length === 0) {
-                msg.style.display = "block";
-            } else {
-                msg.style.display = "none";
-                localHighScores.forEach((item, idx) => {
-                    const li = document.createElement('li');
-                    li.className = 'lb-item';
-                    li.innerHTML = `<span>${idx+1}. ${item.name}</span><span>${item.score}</span>`;
-                    list.appendChild(li);
-                });
-            }
+            loadScores(); // Refresh from storage
+            const list = document.getElementById('lb-list'); const msg = document.getElementById('lb-empty-msg'); list.innerHTML = "";
+            if(localHighScores.length === 0) { msg.style.display = "block"; } else { msg.style.display = "none"; localHighScores.forEach((item, idx) => { const li = document.createElement('li'); li.className = 'lb-item'; li.innerHTML = `<span>${idx+1}. ${item.name}</span><span>${item.score}</span>`; list.appendChild(li); }); }
             document.getElementById('leaderboard-modal').style.display='flex';
         }
 
-        // --- GOOGLE SHEET SEND ---
-        function sendToGoogleSheet() {
-            if(!GOOGLE_SCRIPT_URL) return;
-            const playersToSend = [];
-            playersToSend.push(appState.players[0]);
-            if(appState.mode === 2) playersToSend.push(appState.players[1]);
-            
-            playersToSend.forEach(p => {
-                if(!p.name) return;
-                const data = {
-                    date: new Date().toLocaleString(), name: p.name, score: p.score, mistakes: p.mistakes,
-                    mode: appState.mode === 1 ? "1 Player" : "2 Player", level: "Sesi " + (appState.currentThemeIdx + 1)
-                };
-                fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST', mode: 'no-cors', 
-                    headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data)
-                }).then(() => console.log("Sent")).catch(e => console.error(e));
-            });
-        }
-
+        function sendToGoogleSheet() { if(!GOOGLE_SCRIPT_URL) return; const playersToSend = []; playersToSend.push(appState.players[0]); if(appState.mode === 2) playersToSend.push(appState.players[1]); playersToSend.forEach(p => { if(!p.name) return; const data = { date: new Date().toLocaleString(), name: p.name, score: p.score, mistakes: p.mistakes, mode: appState.mode === 1 ? "1 Player" : "2 Player", level: "Sesi " + (appState.currentThemeIdx + 1) }; fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }).then(() => console.log("Sent")).catch(e => console.error(e)); }); }
         function backToLevels() { document.getElementById('result-overlay').style.display='none'; showScreen('level-screen'); }
         function confirmExit() { showScreen('entry-screen'); }
         function showToast(t,c) { const x=document.getElementById('toast'); x.innerText=t; x.style.background=c; x.className="show"; setTimeout(()=>{x.className=x.className.replace("show","")},3000); }
         function openSettings(){document.getElementById('settings-modal').style.display='flex'}
-        function closeSettings(){ const rs=document.getElementsByName('diff'); for(let r of rs) if(r.checked) appState.difficulty=r.value; document.getElementById('settings-modal').style.display='none'; }
+        function closeSettings(){ const d=document.getElementsByName('diff'); for(let r of d) if(r.checked) appState.difficulty=r.value; const s=document.getElementsByName('sound'); for(let r of s) if(r.checked) appState.sound=r.value; document.getElementById('settings-modal').style.display='none'; showToast("Pengaturan Disimpan!"); }
         function closeLeaderboard(){document.getElementById('leaderboard-modal').style.display='none'}
+        
+        // NEW FUNCTIONS
+        function openInstructions() {
+            document.getElementById('instruction-modal').style.display = 'flex';
+        }
+        function closeInstructions() {
+            document.getElementById('instruction-modal').style.display = 'none';
+        }
+
         function playTTS(pNum) { 
+            if(appState.sound === 'off') return;
             const pIdx = pNum; 
             if(appState.players[pIdx] && appState.players[pIdx].currentWord) {
                 const u=new SpeechSynthesisUtterance(appState.players[pIdx].currentWord.word); 
