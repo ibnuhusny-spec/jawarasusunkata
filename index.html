@@ -62,11 +62,10 @@
             animation: breathe 3s infinite ease-in-out;
         }
         
-        /* JUDUL UTAMA DARI GAMBAR JAWARA.PNG - DIPERBAIKI AGAR TIDAK KEGEDEAN */
         .main-title-img {
-            width: auto; /* Biar rasio tetap */
-            max-width: 90%; /* Tidak melebar lebih dari layar */
-            max-height: 150px; /* BATAS TINGGI AGAR TIDAK MENUTUPI LAYAR */
+            width: auto; 
+            max-width: 90%; 
+            max-height: 150px; 
             display: block; margin: 10px auto;
             filter: drop-shadow(0 5px 5px rgba(0,0,0,0.2));
             animation: breathe 4s infinite ease-in-out;
@@ -83,7 +82,7 @@
 
         @media (max-width: 600px) { 
             .logo-img { width: 80px; }
-            .main-title-img { max-height: 120px; } /* Lebih kecil di HP */
+            .main-title-img { max-height: 120px; }
         }
 
         /* GAMEPLAY */
@@ -182,16 +181,29 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @keyframes shake { 0%,100% {transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
-        @keyframes popIn { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
         
-        .audio-check { position:absolute; top:20px; left:20px; font-size:1.5rem; background:rgba(255,255,255,0.3); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; border:2px solid white; }
+        /* AUDIO CHECK BUTTON */
+        .audio-check { 
+            position:absolute; top:20px; left:20px; 
+            font-size:1.8rem; 
+            background: linear-gradient(135deg, #f39c12, #d35400); 
+            width:50px; height:50px; 
+            border-radius:50%; display:flex; align-items:center; justify-content:center; 
+            cursor:pointer; border:3px solid white; color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 20;
+            transition: transform 0.2s;
+        }
+        .audio-check:active { transform: scale(0.9); }
     </style>
 </head>
 <body>
 
     <!-- 1. SPLASH -->
     <div id="splash-screen" class="screen active">
-        <div class="audio-check" onclick="testSound(event)">🔊</div>
+        <!-- TOMBOL SOUND (Mute/Unmute) -->
+        <div id="splashAudioBtn" class="audio-check" onclick="toggleSound()">🔊</div>
+        
         <img src="logo.png" alt="Logo Sekolah" class="logo-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2602/2602414.png'">
         
         <!-- JUDUL DARI GAMBAR -->
@@ -332,11 +344,11 @@
         <div class="modal-box">
             <h2 class="menu-title">Pengaturan</h2>
             <div class="settings-section">
-                <span class="settings-title">Waktu Permainan:</span>
+                <span class="settings-title">Tingkat Kesulitan:</span>
                 <div class="radio-group">
-                    <label class="radio-item"><input type="radio" name="time" value="90" checked> 90 Detik (Lambat - Ada Bantuan)</label>
-                    <label class="radio-item"><input type="radio" name="time" value="60"> 60 Detik (Normal - Tanpa Bantuan)</label>
-                    <label class="radio-item"><input type="radio" name="time" value="30"> 30 Detik (Cepat - Tanpa Bantuan)</label>
+                    <label class="radio-item"><input type="radio" name="gameMode" value="90-1" checked> <b>Lambat</b> (90d - Ada Bantuan)</label>
+                    <label class="radio-item"><input type="radio" name="gameMode" value="90-0"> <b>Sedang</b> (90d - Tanpa Bantuan)</label>
+                    <label class="radio-item"><input type="radio" name="gameMode" value="60-0"> <b>Cepat</b> (60d - Tanpa Bantuan)</label>
                 </div>
             </div>
             <div class="settings-section">
@@ -439,10 +451,24 @@
             }
         }
         
-        function testSound(e) {
-            e.stopPropagation();
-            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            audioCtx.resume().then(() => { playSound('win'); showToast("🔊 Tes Suara"); });
+        // NEW TOGGLE SOUND FUNCTION
+        function toggleSound() {
+            const btn = document.getElementById('splashAudioBtn');
+            if (appState.sound === 'on') {
+                appState.sound = 'off';
+                btn.innerText = '🔇';
+                btn.style.background = '#7f8c8d';
+            } else {
+                appState.sound = 'on';
+                btn.innerText = '🔊';
+                btn.style.background = 'linear-gradient(135deg, #f39c12, #d35400)';
+                // Test sound
+                if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                audioCtx.resume().then(() => playTone(600, 'sine'));
+            }
+            // Sync with radio buttons if modal is opened later
+            const radios = document.getElementsByName('sound');
+            for(let r of radios) { r.checked = (r.value === appState.sound); }
         }
 
         // --- DATA INPUT ---
@@ -490,7 +516,8 @@
         });
 
         // --- GLOBAL VARIABLES ---
-        let appState = { mode: 1, timeLimit: 90, sound: "on", appMode: "play", currentThemeIdx: 0, currentWordIdx: 0, timer: 0, interval: null, questionQueue: [], players: [ { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null }, { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null } ] };
+        // gameConfig Format: "SECONDS-ENABLEHINT" (1=true, 0=false)
+        let appState = { mode: 1, gameConfig: "90-1", timeLimit: 90, enableHint: true, sound: "on", appMode: "play", currentThemeIdx: 0, currentWordIdx: 0, timer: 0, interval: null, questionQueue: [], players: [ { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null }, { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null } ] };
         let activeDrags = {};
         let localHighScores = [];
         const placeholderImg = "https://cdn-icons-png.flaticon.com/512/3330/3330314.png"; 
@@ -523,8 +550,7 @@
                 if (e.target.tagName === 'INPUT' && e.target.type === 'text') playSound('pop');
             });
             
-            document.getElementById('p1-check').addEventListener('pointerdown', function(e) { handleCheck(e, 1); });
-            document.getElementById('p2-check').addEventListener('pointerdown', function(e) { handleCheck(e, 2); });
+            // REMOVED DUPLICATE LISTENERS HERE TO FIX DOUBLE TTS
         };
 
         function setAppMode(mode) {
@@ -600,6 +626,12 @@
         // --- GAME LOGIC ---
         function startGame(themeIdx) {
             appState.currentThemeIdx = themeIdx;
+            
+            // PARSE GAME CONFIG HERE
+            const configParts = appState.gameConfig.split('-');
+            appState.timeLimit = parseInt(configParts[0]);
+            appState.enableHint = (configParts[1] === '1');
+
             appState.questionQueue = vocabData[themeIdx].items; 
             appState.currentWordIdx = 0;
             appState.players.forEach(p => { 
@@ -619,7 +651,8 @@
             if (player.wordIdx >= appState.questionQueue.length) {
                 player.finished = true;
                 document.getElementById(`p${pNum}-overlay`).style.display = 'flex';
-                document.getElementById(`p${pNum}-overlay`).innerHTML = `<div>✅ SELESAI</div><div style="font-size:1rem; margin-top:10px;">Menunggu Waktu...</div>`;
+                document.getElementById(`p${pNum}-overlay`).innerHTML = `<div>✅ SELESAI</div><div style="font-size:1rem; margin-top:10px;">Menunggu...</div>`;
+                checkGameCompletion(); // FIX: CEK APAKAH GAME SUDAH SELESAI
                 return;
             }
             const raw = appState.questionQueue[player.wordIdx];
@@ -637,6 +670,20 @@
             document.getElementById(`p${pNum}-round-disp`).innerText = `Soal ${player.wordIdx + 1}/${appState.questionQueue.length}`;
             renderPlayerBoard(pNum, player.currentWord);
         }
+        
+        function checkGameCompletion() {
+            if(appState.mode === 1) {
+                if(appState.players[0].finished) {
+                    stopTimer();
+                    showResult();
+                }
+            } else {
+                if(appState.players[0].finished && appState.players[1].finished) {
+                    stopTimer();
+                    showResult();
+                }
+            }
+        }
 
         function renderPlayerBoard(pNum, lvl) {
             document.getElementById(`p${pNum}-overlay`).style.display = 'none';
@@ -650,8 +697,8 @@
             document.getElementById(`p${pNum}-meaning`).innerText = lvl.meaning;
             
             const hintEl = document.getElementById(`p${pNum}-hint`);
-            // LOGIKA HINT: HANYA MUNCUL DI LEVEL 90 DETIK (LAMBAT)
-            if (parseInt(appState.timeLimit) === 90) { 
+            // LOGIKA HINT BARU BERDASARKAN ENABLEHINT
+            if (appState.enableHint) { 
                 hintEl.innerText = lvl.word; 
                 hintEl.style.display = 'block'; 
             } else { 
@@ -759,8 +806,13 @@
                 document.getElementById(`p${pNum}-msg`).style.color = "var(--primary)";
                 document.getElementById(`p${pNum}-check`).style.display = 'none';
                 document.getElementById(`p${pNum}-hint`).style.display = 'block'; 
-                playSound('win'); confetti(); playTTS(pNum);
-                setTimeout(() => { appState.players[pIdx].wordIdx++; loadPlayerQuestion(pNum); }, 1500);
+                playSound('win'); confetti(); playTTS(pNum - 1); 
+                setTimeout(() => { 
+                    if(appState.timer > 0) { // Safety check
+                        appState.players[pIdx].wordIdx++; 
+                        loadPlayerQuestion(pNum); 
+                    }
+                }, 1500);
             } else {
                 appState.players[pIdx].lives--; appState.players[pIdx].mistakes++;
                 document.getElementById(`p${pNum}-lives`).innerText = "❤️".repeat(appState.players[pIdx].lives) + "🖤".repeat(3-appState.players[pIdx].lives);
@@ -768,8 +820,9 @@
                 if(appState.players[pIdx].lives <= 0) {
                     document.getElementById(`p${pNum}-msg`).innerText = "Game Over"; document.getElementById(`p${pNum}-msg`).style.color = "var(--wrong)";
                     appState.players[pIdx].finished = true; document.getElementById(`p${pNum}-check`).style.display = 'none';
-                    document.getElementById(`p${pNum}-overlay`).innerHTML = `<div>❌ GAME OVER</div><div style="font-size:1rem;">Menunggu Waktu...</div>`;
+                    document.getElementById(`p${pNum}-overlay`).innerHTML = `<div>❌ GAME OVER</div><div style="font-size:1rem;">Menunggu...</div>`;
                     document.getElementById(`p${pNum}-overlay`).style.display = 'flex';
+                    checkGameCompletion(); // FIX: CEK SELESAI SAAT GAME OVER
                 }
             }
         }
@@ -785,17 +838,30 @@
 
         function showResult() {
             stopTimer();
+            // --- NEW: TIME BONUS ---
+            const timeBonus = appState.timer > 0 ? appState.timer : 0;
+            
+            // Add bonus to players
+            appState.players.forEach(p => {
+                if(p.finished || (appState.timer <= 0 && p.score > 0)) {
+                    p.score += timeBonus;
+                }
+            });
+
             document.getElementById('result-overlay').style.display='flex';
             const content = document.getElementById('resultContent');
-            let html = `<div><h1 style="color:var(--primary); font-family:'Amiri'; margin:0;">Waktu Habis!</h1></div><hr>`;
+            let html = `<div><h1 style="color:var(--primary); font-family:'Amiri'; margin:0;">Permainan Selesai!</h1></div><hr>`;
             
             // Generate current Theme Name
             const currentThemeName = vocabData[appState.currentThemeIdx].theme;
+            
+            // Display Time Bonus info
+            html += `<div style="color:var(--accent); font-size:1rem; margin-bottom:10px;">Bonus Waktu: +${timeBonus} poin</div>`;
 
             if(appState.mode === 1) {
                 const p1 = appState.players[0];
                 addToLeaderboard(p1.name, p1.score, currentThemeName);
-                html += `<div>Skor Akhir: <b style="font-size:2rem">${appState.players[0].score}</b></div><div style="font-size:0.9rem">Salah: ${appState.players[0].mistakes}</div>`;
+                html += `<div>Skor Akhir: <b style="font-size:2.5rem">${appState.players[0].score}</b></div><div style="font-size:0.9rem">Salah: ${appState.players[0].mistakes}</div>`;
             } else {
                 const p1 = appState.players[0]; 
                 const p2 = appState.players[1];
@@ -854,7 +920,7 @@
         function confirmExit() { showScreen('entry-screen'); }
         function showToast(t,c) { const x=document.getElementById('toast'); x.innerText=t; x.style.background=c; x.className="show"; setTimeout(()=>{x.className=x.className.replace("show","")},3000); }
         function openSettings(){document.getElementById('settings-modal').style.display='flex'}
-        function closeSettings(){ const d=document.getElementsByName('time'); for(let r of d) if(r.checked) appState.timeLimit=r.value; const s=document.getElementsByName('sound'); for(let r of s) if(r.checked) appState.sound=r.value; document.getElementById('settings-modal').style.display='none'; showToast("Pengaturan Disimpan!"); }
+        function closeSettings(){ const d=document.getElementsByName('gameMode'); for(let r of d) if(r.checked) appState.gameConfig=r.value; const s=document.getElementsByName('sound'); for(let r of s) if(r.checked) appState.sound=r.value; document.getElementById('settings-modal').style.display='none'; showToast("Pengaturan Disimpan!"); }
         function closeLeaderboard(){document.getElementById('leaderboard-modal').style.display='none'}
         
         // NEW FUNCTIONS
@@ -867,7 +933,7 @@
 
         function playTTS(pNum) { 
             if(appState.sound === 'off') return;
-            const pIdx = pNum; 
+            const pIdx = pNum; // pNum should be 0 or 1
             if(appState.players[pIdx] && appState.players[pIdx].currentWord) {
                 const u=new SpeechSynthesisUtterance(appState.players[pIdx].currentWord.word); 
                 u.lang='ar-SA'; u.rate=0.8; window.speechSynthesis.speak(u); 
