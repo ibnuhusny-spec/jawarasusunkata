@@ -98,31 +98,53 @@
             text-align: center; border-radius: 15px;
         }
         
-        .game-card { background: white; padding: 5px; border-radius: 15px; border: 2px solid white; box-shadow: 0 5px 10px rgba(0,0,0,0.1); margin-bottom: 5px; width: 95%; max-width: 300px; text-align: center; }
-        .image-preview img { width: 100%; height: 80px; object-fit: contain; }
+        .game-card { 
+            background: white; 
+            padding: 15px 10px; /* Padding vertikal ditambah */
+            border-radius: 15px; 
+            border: 2px solid white; 
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1); 
+            margin-bottom: 10px; /* Jarak bawah ditambah */
+            width: 95%; max-width: 300px; 
+            text-align: center; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        
+        /* SPASI YANG LEBIH LEGA (LOWONG) */
+        .image-preview img { 
+            width: 100%; 
+            height: 90px; 
+            object-fit: contain; 
+            margin-bottom: 20px; /* Spasi bawah gambar diperbesar */
+        }
+        
+        .word-meaning {
+            font-family: 'Fredoka', sans-serif; 
+            font-size: 1.1rem; 
+            color: var(--secondary);
+            margin-bottom: 15px; /* Spasi bawah arti kata diperbesar */
+            font-weight: bold;
+        }
         
         /* HINT STYLE */
         .word-hint {
             font-family: 'Amiri', serif; font-size: 2.5rem; color: #888; background: #fffbf0;
-            border: 2px dashed #ffeeba; border-radius: 10px; margin-top: 2px; padding: 0 10px;
-            display: none; line-height: 1.2; pointer-events: none;
+            border: 2px dashed #ffeeba; border-radius: 10px; 
+            margin-top: 10px; 
+            padding: 5px 15px;
+            display: none; line-height: 1.4; pointer-events: none;
+            width: auto; min-width: 100px;
         }
         
-        /* ARTI KATA */
-        .word-meaning {
-            font-family: 'Fredoka', sans-serif; font-size: 1rem; color: var(--secondary);
-            margin-top: 2px; font-weight: bold;
-        }
-        
-        .slots-container { display: flex; gap: 5px; margin: 5px 0; direction: rtl; min-height: 60px; align-items: center; justify-content: center; flex-wrap: wrap; }
+        .slots-container { display: flex; gap: 8px; margin: 15px 0; direction: rtl; min-height: 60px; align-items: center; justify-content: center; flex-wrap: wrap; }
         .slot { width: 45px; height: 60px; background: #ecf0f1; border: 2px dashed #bdc3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 30px; transition: all 0.3s; cursor: pointer; margin: 2px; }
         .slot.correct { background: #d4edda; border-color: #28a745; }
         .slot.wrong { background: #f8d7da; border-color: #dc3545; animation: shake 0.4s; }
 
         /* Layout Adjustment for Pool & Button */
         .letters-pool { 
-            display: flex; flex-wrap: wrap; gap: 5px; justify-content: center; width: 98%; direction: rtl; 
-            padding: 5px; background: rgba(255,255,255,0.3); border-radius: 15px; 
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 98%; direction: rtl; 
+            padding: 10px; background: rgba(255,255,255,0.4); border-radius: 15px; 
             min-height: 80px; margin-bottom: 5px;
         }
         .letter-card { width: 45px; height: 45px; background: white; border: 2px solid #bdc3c7; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Amiri', serif; font-size: 26px; cursor: grab; box-shadow: 0 4px 0 #bdc3c7; user-select: none; touch-action: none; }
@@ -134,7 +156,7 @@
         .timer-badge { background: var(--wrong); color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 1.5rem; min-width: 60px; text-align: center; }
         .round-indicator { font-size: 0.9rem; font-weight: bold; color: #666; margin-top: 2px; }
         
-        .p-info { text-align: center; width: 100%; margin-bottom: 2px; }
+        .p-info { text-align: center; width: 100%; margin-bottom: 5px; }
         .p-name { font-weight: bold; color: var(--primary); font-size: 1.1rem; }
         .p-score { font-size: 0.9rem; color: #555; }
         .p-lives { color: var(--wrong); letter-spacing: 2px; font-size: 1rem;}
@@ -181,6 +203,7 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @keyframes shake { 0%,100% {transform:translateX(0)} 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.5); } 100% { opacity: 1; transform: scale(1); } }
         
         /* AUDIO CHECK BUTTON */
         .audio-check { 
@@ -260,7 +283,7 @@
         <div class="top-bar">
             <button class="nav-btn" onclick="confirmExit()">🏠</button>
             <div style="display:flex; align-items:center;">
-                <div class="timer-badge" id="dispTimer">90</div>
+                <div class="timer-badge" id="dispTimer">120</div>
                 <div class="round-indicator" id="roundDisp">Soal 1/10</div>
             </div>
             <button class="nav-btn" onclick="showScreen('level-screen')">🔙</button>
@@ -346,7 +369,8 @@
             <div class="settings-section">
                 <span class="settings-title">Tingkat Kesulitan:</span>
                 <div class="radio-group">
-                    <label class="radio-item"><input type="radio" name="gameMode" value="90-1" checked> <b>Lambat</b> (90d - Ada Bantuan)</label>
+                    <label class="radio-item"><input type="radio" name="gameMode" value="120-1" checked> <b>Pemula</b> (120d - Ada Bantuan)</label>
+                    <label class="radio-item"><input type="radio" name="gameMode" value="90-1"> <b>Mudah</b> (90d - Ada Bantuan)</label>
                     <label class="radio-item"><input type="radio" name="gameMode" value="90-0"> <b>Sedang</b> (90d - Tanpa Bantuan)</label>
                     <label class="radio-item"><input type="radio" name="gameMode" value="60-0"> <b>Cepat</b> (60d - Tanpa Bantuan)</label>
                 </div>
@@ -517,7 +541,8 @@
 
         // --- GLOBAL VARIABLES ---
         // gameConfig Format: "SECONDS-ENABLEHINT" (1=true, 0=false)
-        let appState = { mode: 1, gameConfig: "90-1", timeLimit: 90, enableHint: true, sound: "on", appMode: "play", currentThemeIdx: 0, currentWordIdx: 0, timer: 0, interval: null, questionQueue: [], players: [ { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null }, { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null } ] };
+        // DEFAULT SEKARANG: 120 Detik (Pemula)
+        let appState = { mode: 1, gameConfig: "120-1", timeLimit: 120, enableHint: true, sound: "on", appMode: "play", currentThemeIdx: 0, currentWordIdx: 0, timer: 0, interval: null, questionQueue: [], players: [ { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null }, { name: "", score: 0, lives: 3, mistakes: 0, finished: false, currentWord: null } ] };
         let activeDrags = {};
         let localHighScores = [];
         const placeholderImg = "https://cdn-icons-png.flaticon.com/512/3330/3330314.png"; 
@@ -549,8 +574,6 @@
             document.addEventListener('input', function(e) {
                 if (e.target.tagName === 'INPUT' && e.target.type === 'text') playSound('pop');
             });
-            
-            // REMOVED DUPLICATE LISTENERS HERE TO FIX DOUBLE TTS
         };
 
         function setAppMode(mode) {
@@ -805,14 +828,20 @@
                 document.getElementById(`p${pNum}-msg`).innerText = "MUMTAZ! 🎉";
                 document.getElementById(`p${pNum}-msg`).style.color = "var(--primary)";
                 document.getElementById(`p${pNum}-check`).style.display = 'none';
-                document.getElementById(`p${pNum}-hint`).style.display = 'block'; 
+                
+                // --- PERBAIKAN: SELALU TAMPILKAN JAWABAN BENAR ---
+                const hintEl = document.getElementById(`p${pNum}-hint`);
+                hintEl.innerText = lvl.word; // Pastikan teks ada
+                hintEl.style.display = 'block'; // Paksa tampil
+                hintEl.style.animation = 'popIn 0.5s'; // Animasi sedikit
+                
                 playSound('win'); confetti(); playTTS(pNum - 1); 
                 setTimeout(() => { 
                     if(appState.timer > 0) { // Safety check
                         appState.players[pIdx].wordIdx++; 
                         loadPlayerQuestion(pNum); 
                     }
-                }, 1500);
+                }, 2000); // Sedikit diperlama agar siswa sempat melihat jawaban
             } else {
                 appState.players[pIdx].lives--; appState.players[pIdx].mistakes++;
                 document.getElementById(`p${pNum}-lives`).innerText = "❤️".repeat(appState.players[pIdx].lives) + "🖤".repeat(3-appState.players[pIdx].lives);
