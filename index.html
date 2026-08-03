@@ -5,6 +5,12 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Jawara Susun Kata</title>
+    <!-- PWA & Mobile Web App Meta -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#27ae60">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Changa+One&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -218,9 +224,29 @@
             transition: transform 0.2s;
         }
         .audio-check:active { transform: scale(0.9); }
+
+        /* FULLSCREEN BUTTON */
+        .fullscreen-btn {
+            position: fixed; top: 20px; right: 20px;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #2980b9, #1f618d);
+            width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; border: 3px solid white; color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            z-index: 10000;
+            transition: transform 0.2s, background 0.3s;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .fullscreen-btn:active { transform: scale(0.9); }
+        .fullscreen-btn:hover { background: linear-gradient(135deg, #3498db, #2980b9); }
     </style>
 </head>
 <body>
+
+    <!-- TOMBOL FULLSCREEN (Melayang di Pojok Kanan Atas) -->
+    <div id="fullscreenBtn" class="fullscreen-btn" onclick="toggleFullscreen()" title="Layar Penuh (F11)">⛶</div>
 
     <!-- 1. SPLASH -->
     <div id="splash-screen" class="screen active">
@@ -968,6 +994,52 @@
                 u.lang='ar-SA'; u.rate=0.8; window.speechSynthesis.speak(u); 
             }
         }
+
+        // FULLSCREEN TOGGLE SYSTEM
+        function toggleFullscreen() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+                const docEl = document.documentElement;
+                if (docEl.requestFullscreen) {
+                    docEl.requestFullscreen().catch(err => console.log("Fullscreen request failed:", err));
+                } else if (docEl.webkitRequestFullscreen) {
+                    docEl.webkitRequestFullscreen();
+                } else if (docEl.msRequestFullscreen) {
+                    docEl.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(err => console.log("Exit fullscreen failed:", err));
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+
+        function updateFullscreenBtn() {
+            const btn = document.getElementById('fullscreenBtn');
+            if (!btn) return;
+            const isFS = document.fullscreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+            if (isFS) {
+                btn.innerHTML = '🗗';
+                btn.title = 'Keluar Layar Penuh (ESC)';
+            } else {
+                btn.innerHTML = '⛶';
+                btn.title = 'Layar Penuh (F11)';
+            }
+        }
+
+        document.addEventListener('fullscreenchange', updateFullscreenBtn);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenBtn);
+        document.addEventListener('msfullscreenchange', updateFullscreenBtn);
+
+        window.addEventListener('keydown', function(e) {
+            if (e.key === 'F11' || (e.key === 'f' || e.key === 'F') && e.target.tagName !== 'INPUT') {
+                if (e.key === 'F11') e.preventDefault();
+                toggleFullscreen();
+            }
+        });
     </script>
 </body>
 </html>
